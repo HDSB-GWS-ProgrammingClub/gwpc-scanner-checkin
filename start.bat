@@ -1,19 +1,16 @@
-@echo off
-
-:: Python virtual environment
-echo "Created and activated Python virtual environment"
-py -m venv %CD%\venv
-source %CD%\venv\bin\activate
+@ECHO off
 
 :: Install requirements
-npm install
-pip install -r %CD%\requirements.txt
-echo "Installed requirements"
+ECHO Installing requirements
+CALL npm install
+CALL pip install -r %CD%\requirements.txt
+ECHO Installed requirements
 
 :: Compile
-tsc -p %CD%\tsconfig.json
-echo "Code compiled successfully"
+ECHO Compiling TypeScript
+CALL npx tsc -p %CD%\tsconfig.json
+ECHO Code compiled successfully
 
 :: Start
-echo "Starting GWPC Check-in 2.0"
-npm start
+ECHO Starting GWPC Check-in 2.0
+CALL npm start

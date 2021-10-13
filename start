@@ -1,17 +1,14 @@
 #!/bin/bash
 
-# Python virtual environment
-echo "Created and activated Python virtual environment";
-python3 -m venv ./venv || python -m venv ./venv;
-source ./venv/bin/activate;
-
 # Install requirements
+echo "Installing requirements";
 npm install;
 pip install -r ./requirements.txt;
 echo "Installed requirements";
 
 # Compile
-tsc -p ./tsconfig.json;
+echo "Compiling TypeScript";
+npx tsc -p ./tsconfig.json;
 echo "Code compiled successfully";
 
 # Start
