@@ -1,11 +1,13 @@
 const { ipcRenderer } = require('electron');
 
+const pythonCommand = process.platform === "win32" ? "py" : "python3";
+
 // Get form object and student ID
 const checkin_form = document.getElementById("checkin-form");
 const getStudentID = () => { return Number((<HTMLInputElement>document.getElementById("form-studentid")).value) };
 
 const userExists = (studentID: number) => {
-    const stdout = execSync(`python3 ./scripts/checkUserExists.py ${studentID}`);
+    const stdout = execSync(`${pythonCommand} ./scripts/checkUserExists.py ${studentID}`);
     return (stdout.toString().includes('true'));
 }
 
@@ -17,7 +19,7 @@ const getCurrentTime = () => {
 const checkin = (studentID: number) => {
     let currentTime = getCurrentTime();
     // Check in user
-    const stdout = execSync(`python3 ./scripts/checkinUser.py ${studentID} "${currentTime}"`);
+    const stdout = execSync(`${pythonCommand} ./scripts/checkinUser.py ${studentID} "${currentTime}"`);
     // Confirmation dialog
     ipcRenderer.send('userCheckedInConfirm', stdout.toString(), currentTime);
 }

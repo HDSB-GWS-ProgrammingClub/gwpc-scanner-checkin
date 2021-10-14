@@ -39,7 +39,7 @@ signup_form?.addEventListener('submit', (event) => {
         document.getElementById("checkin-btn")!.innerHTML = 'Sign up';
     } else {
         // Create user
-        let stdout = execSync(`python3 ./scripts/createNewUser.py ${JSON.stringify(user)}`);
+        let stdout = execSync(`${pythonCommand} ./scripts/createNewUser.py ${JSON.stringify(user)}`);
         ipcRenderer.send('confirmUserCreated', stdout.toString());
         window.close();
     }
