@@ -102,3 +102,25 @@ ipcMain.on('showAcknowledgementsWindow', (event: any) => {
 });
 
 /* ------------------------------------------------------------------------- */
+
+
+
+/* Offline ---------------------------------------------------------------- */
+
+// Offline error message
+ipcMain.on('offlineErrorMessage', (event: any) => {
+    dialog.showMessageBox({
+        message: 'You are currently offline.',
+        type: 'error'
+    })
+})
+
+// Back online confirmation message
+ipcMain.on('onlineConfirmationMessage', (event: any) => {
+    dialog.showMessageBox({
+        message: 'You are back online.',
+        type: 'info'
+    })
+})
+
+/* ------------------------------------------------------------------------- */
