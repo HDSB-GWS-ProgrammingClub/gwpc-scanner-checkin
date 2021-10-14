@@ -22,12 +22,13 @@ data_list.extend(sys.argv)
 data_list.pop(0)
 
 # Parse data
-data = dict()
-for i in data_list:
-    kv = i.split(':')
-    k = kv[0]
-    v = kv[1]
-    data[k] = v
+data = {
+    'name': data_list[0],
+    'email': data_list[1],
+    'phonenumber': data_list[2],
+    'address': data_list[3],
+    'studentID': data_list[4],
+}
 
 # Insert user into  database
 users_collection.insert_one(data)
