@@ -29,11 +29,13 @@ const createNewUserWindow = (studentID: number) => {
 // On check-in form submit
 checkin_form?.addEventListener('submit', (event) => {
     event.preventDefault();
+    document.getElementById("checkin-btn")!.innerHTML = 'Processing...';
     let studentID = getStudentID();
     if (userExists(studentID))
         checkin(studentID);
     else
         createNewUserWindow(studentID);
+    document.getElementById("checkin-btn")!.innerHTML = 'Check in';
 
 })
 
