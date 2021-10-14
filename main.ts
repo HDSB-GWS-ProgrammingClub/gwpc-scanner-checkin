@@ -15,6 +15,7 @@ const createMainWindow = () => {
             devTools: false
         }
     });
+    win.removeMenu()
     win.loadFile('./views/index.html');
 }
 app.whenReady().then(() => {
@@ -54,6 +55,7 @@ const newUserWindow = (studentID: number) => {
             devTools: false
         }
     });
+    win.removeMenu()
     win.loadFile('./views/signup.html', {query: {'data': JSON.stringify(data)}});
 }
 // Open window on frontend submit
@@ -91,6 +93,7 @@ const openAcknowledgementsWindow = () => {
             devTools: false
         }
     });
+    win.removeMenu()
     win.loadFile('./views/acknowledgements.html');
 }
 // Open window on frontend url click
