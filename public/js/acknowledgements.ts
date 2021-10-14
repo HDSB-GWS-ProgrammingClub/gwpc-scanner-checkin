@@ -16,12 +16,12 @@ const openSourceData = [
     "motdotla/dotenv",
     "oauthlib/oauthlib",
     "psf/requests",
-    "pyparsing/pyparsing/",
+    "pyparsing/pyparsing",
     "requests/requests-oauthlib",
     "sindresorhus/electron-reloader",
-    "sybrenstuvel/python-rsa/",
+    "sybrenstuvel/python-rsa",
     "theskumar/python-dotenv",
-    "tkem/cachetools/",
+    "tkem/cachetools",
     "urllib3/urllib3"
 ]
 
