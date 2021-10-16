@@ -47,8 +47,10 @@ const newUserWindow = (studentID: number) => {
     let data = {studentID: studentID};
 
     const win = new BrowserWindow({
-        width: 600,
-        height: 700,
+        width: 575,
+        height: 575,
+        frame: false,
+        resizable: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
