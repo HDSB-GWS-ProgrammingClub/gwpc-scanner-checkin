@@ -18,8 +18,34 @@ const createMainWindow = () => {
     win.removeMenu()
     win.loadFile('./views/index.html');
 }
+
+const pythonCommand = process.platform === "win32" ? "py" : "python3";
+
+// Update data
+const updateData = () => {
+    execSync(`${pythonCommand} ./scripts/pushData.py`);
+    execSync(`${pythonCommand} ./scripts/pullData.py`);
+}
+// Push data on window close
+app.on('window-all-closed', () => {
+    dialog.showMessageBox({
+        message: 'Updating data',
+        type: 'info'
+    })
+    updateData();
+})
+ipcMain.on('updateData', (event: any) => {
+    updateData();
+    dialog.showMessageBox({
+        message: 'Data has been updated',
+        type: 'info'
+    });
+})
+
+// Run app
 app.whenReady().then(() => {
     createMainWindow();
+    execSync(`${pythonCommand} ./scripts/pullData.py`);
 })
 
 /* ------------------------------------------------------------------------- */
@@ -120,7 +146,7 @@ ipcMain.on('offlineErrorMessage', (event: any) => {
 // Back online confirmation message
 ipcMain.on('onlineConfirmationMessage', (event: any) => {
     dialog.showMessageBox({
-        message: 'You are back online.',
+        message: 'You are back online. Please restart the application.',
         type: 'info'
     })
 })

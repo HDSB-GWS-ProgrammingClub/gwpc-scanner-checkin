@@ -13,6 +13,7 @@
     <!-- Electron dependencies -->
     <script>
         const { execSync } = require('child_process');
+        const pythonCommand = process.platform === "win32" ? "py" : "python3";
     </script>
 
     <!-- Title -->
@@ -38,6 +39,9 @@
     <div class="fixed-bottom d-flex flex-row justify-content-center mb-4">
             <a class="text-info px-5" onclick="require('electron').shell.openExternal('https://jasonli0616.dev')" href="#">
                 Made by Jason Li
+            </a>
+            <a class="text-info px-5" href="#" id="push-data">
+                Push data
             </a>
             <a class="text-info px-5" href="#" id="acknowledgements-link">
                 Acknowledgements

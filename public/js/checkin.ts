@@ -1,7 +1,5 @@
 const { ipcRenderer } = require('electron');
 
-const pythonCommand = process.platform === "win32" ? "py" : "python3";
-
 // Get form object and student ID
 const checkin_form = document.getElementById("checkin-form");
 const getStudentID = () => { return Number((<HTMLInputElement>document.getElementById("form-studentid")).value) };
@@ -27,6 +25,11 @@ const checkin = (studentID: number) => {
 const createNewUserWindow = (studentID: number) => {
     ipcRenderer.send('createNewUserWindow', studentID);
 }
+
+// Push data
+document.getElementById("push-data")?.addEventListener('click', (event) => {
+    ipcRenderer.send('updateData');
+})
 
 // On check-in form submit
 checkin_form?.addEventListener('submit', (event) => {
