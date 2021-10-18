@@ -322,3 +322,4 @@ $RECYCLE.BIN/
 
 creds.json
 *.js
+data/*
