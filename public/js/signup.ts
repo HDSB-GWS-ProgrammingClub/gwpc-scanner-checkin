@@ -43,4 +43,10 @@ signup_form?.addEventListener('submit', (event) => {
         ipcRenderer.send('confirmUserCreated', stdout.toString());
         window.close();
     }
+
+    let currentTime = getCurrentTime();
+    // Check in user
+    const stdout = execSync(`${pythonCommand} ./scripts/checkinUser.py ${studentID} "${currentTime}"`);
+    // Confirmation dialog
+    ipcRenderer.send('userCheckedInConfirm', stdout.toString(), currentTime);
 })
