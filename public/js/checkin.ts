@@ -6,7 +6,7 @@ const getStudentID = () => { return Number((<HTMLInputElement>document.getElemen
 
 const userExists = (studentID: number) => {
     const stdout = execSync(`${pythonCommand} ./scripts/checkUserExists.py ${studentID}`);
-    return (stdout.toString().includes('true'));
+    return (stdout.toString().includes('True'));
 }
 
 const getCurrentTime = () => {
