@@ -3,34 +3,39 @@ This script writes the user's data into the Google Sheet
 It is called from the Electron app code
 '''
 
-import json
+import sqlite3
 import sys
+
+# Initialize SQLite
+db_connection = sqlite3.connect('data/data.db')
+db_cursor = db_connection.cursor()
+
+
 
 # Get data
 studentID = sys.argv[1]
 currentTime = sys.argv[2]
 
+# Get user data
+db_cursor.execute('''SELECT * FROM users
+                    WHERE studentID=:studentID''',
+    {'studentID': studentID}
+)
+user_tuple = db_cursor.fetchone()
+
 # Parse data
-with open('data/users.json', 'r') as f:
-    users = json.load(f)
+user = {
+    'name': user_tuple[0],
+    'email': user_tuple[1],
+    'phonenumber': user_tuple[2],
+    'address': user_tuple[3],
+    'studentID': user_tuple[4],
+    'time': currentTime
+}
 
-with open('data/checkedin.json', 'r') as f:
-    checkedin = json.load(f)
-
-def getUser(studentID: str, json: dict):
-    for i in json:
-        if studentID == i['studentID']:
-            return i
-
-user = getUser(studentID, users)
-
-info_list = list(i for i in user.values())
-# Get date
-info_list.append(currentTime)
-
-# Insert into JSON
-checkedin.append(info_list)
-with open('data/checkedin.json', 'w') as f:
-    json.dump(checkedin, f)
+# Check in
+db_cursor.execute('''INSERT INTO checkedin
+                    VALUES (:name, :email, :phonenumber, :address, :studentID, :time)''', user)
+db_connection.commit()
 
 print(user['name'])

@@ -3,10 +3,15 @@ This script creates a new user in the MongoDB database
 It is called from the Electron app code
 '''
 
-import json
+import sqlite3
 import sys
 
-# Get data
+# Initialize SQLite
+db_connection = sqlite3.connect('data/data.db')
+db_cursor = db_connection.cursor()
+
+
+
 # Get data
 data_list = list()
 data_list.extend(sys.argv)
@@ -21,13 +26,9 @@ data = {
     'studentID': data_list[4],
 }
 
-# Parse data
-with open('data/users.json', 'r') as f:
-    users = json.load(f)
-
-# Insert into JSON
-users.append(data)
-with open('data/users.json', 'w') as f:
-    json.dump(users, f)
+# Insert new user to local SQLite DB
+db_cursor.execute('''INSERT INTO users
+                    VALUES (:name, :email, :phonenumber, :address, :studentID)''', data)
+db_connection.commit()
 
 print('User created')

@@ -1,12 +1,12 @@
 '''
-Writes MongoDB data to JSON
+Writes MongoDB data to SQLite
 Called when Electron app is run
 '''
 
 import pymongo
 import dotenv
 import os
-import json
+import sqlite3
 
 dotenv.load_dotenv()
 
@@ -16,10 +16,36 @@ mongodb_client = pymongo.MongoClient(MONGODB_CONNECTION)
 db = mongodb_client['Cluster0']
 users_collection = db['users']
 
-users = [{k: v for k, v in d.items() if k != '_id'} for d in users_collection.find()]
+# Initialize SQLite
+db_connection = sqlite3.connect('data/data.db')
+db_cursor = db_connection.cursor()
 
-with open('data/users.json', 'w') as f:
-    json.dump(users, f)
 
-with open('data/checkedin.json', 'w') as f:
-    json.dump([], f)
+
+# Get all users from MongoDB
+users = []
+users.extend(users_collection.find())
+
+# Clear tables
+db_cursor.execute('DROP TABLE IF EXISTS users')
+db_cursor.execute('DROP TABLE IF EXISTS checkedin')
+
+# Create tables
+db_cursor.execute('''CREATE TABLE users
+                    (name TEXT, email TEXT, phonenumber TEXT, address TEXT, studentID TEXT)''')
+db_cursor.execute('''CREATE TABLE checkedin
+                    (name TEXT, email TEXT, phonenumber TEXT, address TEXT, studentID TEXT, time TEXT)''')
+
+# Write users to local SQLite DB
+for user in users:
+    db_cursor.execute('''INSERT INTO users
+                        VALUES (:name, :email, :phonenumber, :address, :studentID)''',
+        {
+            'name': user['name'],
+            'email': user['email'],
+            'phonenumber': user['phonenumber'],
+            'address': user['address'],
+            'studentID': user['studentID']
+        }
+    )
+db_connection.commit()

@@ -1,5 +1,5 @@
 '''
-Writes new JSON data to MongoDB
+Writes new SQLite data to MongoDB
 Called when Electron app is closed or when button pressed
 '''
 
@@ -8,7 +8,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import dotenv
 import os
-import json
+import sqlite3
 import dotenv
 
 dotenv.load_dotenv()
@@ -25,19 +25,32 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(f'{os.getcwd()}/creds.j
 gspread_client = gspread.authorize(creds)
 checkin_sheet = gspread_client.open('GWPC Check-in 2.0').sheet1
 
-with open('data/users.json', 'r') as f:
-    users = json.load(f)
+# Initialize SQLite
+db_connection = sqlite3.connect('data/data.db')
+db_cursor = db_connection.cursor()
 
-with open('data/checkedin.json', 'r') as f:
-    checkedin = json.load(f)
+
+
+db_cursor.execute('SELECT * FROM users')
+users = db_cursor.fetchall()
+
+db_cursor.execute('SELECT * FROM checkedin')
+checkedin = db_cursor.fetchall()
 
 # Remove duplicate users
 new_users = []
 existing_users = [{k: v for k, v in d.items() if k != '_id'} for d in users_collection.find()]
 
 for i in users:
-    if i not in existing_users:
-        new_users.append(i)
+    user = {
+        'name': i[0],
+        'email': i[1],
+        'phonenumber': i[2],
+        'address': i[3],
+        'studentID': i[4]
+    }
+    if user not in existing_users:
+        new_users.append(user)
 
 if new_users:
     users_collection.insert_many(new_users)
