@@ -17,7 +17,7 @@ db = mongodb_client['Cluster0']
 users_collection = db['users']
 
 # Initialize SQLite
-db_connection = sqlite3.connect('data/data.db')
+db_connection = sqlite3.connect('./data.db')
 db_cursor = db_connection.cursor()
 
 

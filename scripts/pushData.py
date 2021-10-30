@@ -26,7 +26,7 @@ gspread_client = gspread.authorize(creds)
 checkin_sheet = gspread_client.open('GWPC Check-in 2.0').sheet1
 
 # Initialize SQLite
-db_connection = sqlite3.connect('data/data.db')
+db_connection = sqlite3.connect('./data.db')
 db_cursor = db_connection.cursor()
 
 

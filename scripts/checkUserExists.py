@@ -7,7 +7,7 @@ import sqlite3
 import sys
 
 # Initialize SQLite
-db_connection = sqlite3.connect('data/data.db')
+db_connection = sqlite3.connect('./data.db')
 db_cursor = db_connection.cursor()
 
 
