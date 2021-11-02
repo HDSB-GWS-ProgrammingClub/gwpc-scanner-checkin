@@ -31,6 +31,9 @@ document.getElementById("push-data")?.addEventListener('click', (event) => {
     ipcRenderer.send('updateData');
 })
 
+// Auto select
+document.getElementById("form-studentid")?.focus();
+
 // On check-in form submit
 checkin_form?.addEventListener('submit', (event) => {
     event.preventDefault();
