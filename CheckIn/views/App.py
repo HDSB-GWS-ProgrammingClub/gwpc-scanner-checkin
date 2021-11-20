@@ -2,7 +2,9 @@ from tkinter import *
 from tkinter import ttk as ttk
 from tkinter import messagebox
 from .Base import Base
-from Views.CreateUser import CreateUser
+from .CreateUser import CreateUser
+from ..User import User
+from ..Database import Database
 import webbrowser
 
 class App(Base):
@@ -36,14 +38,17 @@ class App(Base):
 
         # Frame for credits links
         credits_frame = Frame(self, background='#101414')
+
         # Made by Jason
         madeby_link = Label(credits_frame, text='Made by Jason', font=('*', 18), fg='cyan', cursor='hand2', background='#101414')
         madeby_link.pack(side=LEFT, padx=30)
         madeby_link.bind('<Button-1>', lambda e: webbrowser.open_new_tab('https://jasonli0616.dev'))
+
         # Push data
         pushdata_link = Label(credits_frame, text='Push data', font=('*', 18), fg='cyan', cursor='hand2', background='#101414')
         pushdata_link.pack(side=LEFT, padx=30)
-        pushdata_link.bind('<Button-1>', lambda e: print('Push data'))
+        pushdata_link.bind('<Button-1>', self.push_data)
+
         # Acknowledgements
         acknowledgement_link = Label(credits_frame, text='Acknowledgements', font=('*', 18), fg='cyan', cursor='hand2', background='#101414')
         acknowledgement_link.pack(side=LEFT, padx=30)
@@ -52,9 +57,23 @@ class App(Base):
         credits_frame.pack(side=BOTTOM, pady=(0, 30))
     
     def checkin(self, *args):
+        '''Check in user'''
+
         studentID = self.studentid_entry.get().strip()
 
-        if studentID and studentID.isnumeric():
-            CreateUser(studentID).mainloop()
+        if studentID.isnumeric():
+            
+            if User.check_user_exists(studentID):
+                checkedin_info = User.checkin_user(studentID)
+                messagebox.showinfo('Checked-in', f'Checked-in user {checkedin_info[0]} at {checkedin_info[1]}.')
+            else:
+                CreateUser(studentID).mainloop()
+
         else:
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
+    
+    def push_data(self):
+
+        Database.push_data()
+        Database.pull_data()
+        messagebox.showinfo('Updated data', 'Data has been updated.')
