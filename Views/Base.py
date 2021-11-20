@@ -2,15 +2,18 @@ from tkinter import *
 from tkinter import ttk as ttk
 from PIL import ImageTk, Image
 
-class Base(Tk):
+class Base(Toplevel):
     '''The base class for the GUI'''
-    def __init__(self, geometry: str, title: str = 'GWPC Check-in 2.0', titlebar: str = 'GWPC Check-in 2.0'):
+    def __init__(self, geometry: str, title: str = '', titlebar: str = 'GWPC Check-in 2.0'):
         super().__init__()
 
         self.config(background='#101414')
 
         self.geometry(geometry)
-        self.title(title)
+        if title:
+            self.title(f'GWPC Check-in 2.0 - {title}')
+        else:
+            self.title('GWPC Check-in 2.0')
 
         # Logo
         logo = ImageTk.PhotoImage(Image.open('gwpc-logo.png').resize((60, 60)), Image.ANTIALIAS)

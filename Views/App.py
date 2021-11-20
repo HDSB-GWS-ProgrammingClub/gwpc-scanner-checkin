@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk as ttk
+from tkinter import messagebox
 from .Base import Base
+from Views.CreateUser import CreateUser
 import webbrowser
 
 class App(Base):
@@ -50,4 +52,9 @@ class App(Base):
         credits_frame.pack(side=BOTTOM, pady=(0, 30))
     
     def checkin(self, *args):
-        print(self.studentid_entry.get().strip())
+        studentID = self.studentid_entry.get().strip()
+
+        if studentID and studentID.isnumeric():
+            CreateUser(studentID).mainloop()
+        else:
+            messagebox.showerror('Error', 'Please scan your student ID barcode.')
