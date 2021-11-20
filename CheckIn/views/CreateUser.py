@@ -67,10 +67,11 @@ class CreateUser(Base):
         studentID = self.studentID_entry.get().strip()
 
         # Validation
-        if not fullname or not fullname.isalpha():
+        if not fullname:
             messagebox.showerror('Error', 'Please enter your full name.')
-        elif not re.match('/[a-zA-Z0-9]+@hdsb.ca/', schoolemail):
-            messagebox.showerror('Error', 'Please enter your school email.')
+        elif not re.match('[a-zA-Z0-9]+@hdsb.ca', schoolemail):
+            print(f'"{schoolemail}"')
+            messagebox.showerror('Error', 'Please enter your school email address.')
         elif not address:
             messagebox.showerror('Error', 'Please enter your address.')
         elif not phonenumber.isalnum() or not re.match('^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$', phonenumber):
@@ -80,3 +81,4 @@ class CreateUser(Base):
         else:
             User.create_new_user(fullname, schoolemail, phonenumber, address, int(studentID))
             messagebox.showinfo('User created', f'Created new user {fullname}.')
+            self.destroy()

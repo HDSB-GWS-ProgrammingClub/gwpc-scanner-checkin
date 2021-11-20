@@ -71,8 +71,10 @@ class App(Base):
 
         else:
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
+        
+        self.studentid_entry.delete(0, END)
     
-    def push_data(self):
+    def push_data(self, *args):
 
         Database.push_data()
         Database.pull_data()
