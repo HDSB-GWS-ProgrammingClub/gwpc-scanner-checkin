@@ -13,8 +13,11 @@ CheckIn.Database.pull_data()
 app = CheckIn.views.App()
 
 def on_close():
+    '''Push data on close'''
+
     messagebox.showinfo('Pushing data', 'Pushing data...')
     CheckIn.Database.push_data()
+    messagebox.showinfo('Updated data', 'Data has been updated.')
     root.destroy()
 
 app.protocol('WM_DELETE_WINDOW', on_close)
