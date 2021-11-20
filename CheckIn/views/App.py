@@ -3,6 +3,7 @@ from tkinter import ttk as ttk
 from tkinter import messagebox
 from .Base import Base
 from .CreateUser import CreateUser
+from .Acknowledgements import Acknowledgements
 from ..User import User
 from ..Database import Database
 import webbrowser
@@ -52,7 +53,7 @@ class App(Base):
         # Acknowledgements
         acknowledgement_link = Label(credits_frame, text='Acknowledgements', font=('*', 18), fg='cyan', cursor='hand2', background='#101414')
         acknowledgement_link.pack(side=LEFT, padx=30)
-        acknowledgement_link.bind('<Button-1>', lambda e: print('Push data'))
+        acknowledgement_link.bind('<Button-1>', lambda e: Acknowledgements().mainloop())
 
         credits_frame.pack(side=BOTTOM, pady=(0, 30))
     
