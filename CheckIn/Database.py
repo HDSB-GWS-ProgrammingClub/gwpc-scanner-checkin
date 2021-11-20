@@ -5,6 +5,7 @@ import sqlite3
 import pymongo
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import subprocess
 
 dotenv.load_dotenv()
 
@@ -89,3 +90,8 @@ class Database:
 
         for i in checkedin:
             checkin_sheet.insert_row(i, 2)
+    
+    def shutdown():
+        '''Delete SQLite file on close'''
+
+        subprocess.call(['rm', 'data.db'])

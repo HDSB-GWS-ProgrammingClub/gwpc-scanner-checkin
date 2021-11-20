@@ -17,6 +17,7 @@ def on_close():
 
     messagebox.showinfo('Pushing data', 'Pushing data...')
     CheckIn.Database.push_data()
+    CheckIn.Database.shutdown()
     messagebox.showinfo('Updated data', 'Data has been updated.')
     root.destroy()
 
