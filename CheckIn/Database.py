@@ -6,6 +6,7 @@ import pymongo
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import subprocess
+import platform
 
 dotenv.load_dotenv()
 
@@ -93,4 +94,7 @@ class Database:
     def shutdown():
         '''Delete SQLite file on close'''
 
-        subprocess.call(['rm', 'data.db'])
+        if platform.system() == 'Windows':
+            subprocess.call(['del', '/f', 'data.db'], shell=True)
+        else:
+            subprocess.call(['rm', 'data.db'])
