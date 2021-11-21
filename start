@@ -2,19 +2,12 @@
 
 # Install requirements
 echo "Installing requirements";
-[ ! -d "./node_modules" ] && npm install;
-if [ -f "/usr/local/bin/pip3" ]; then
-    pip3 install -r ./requirements.txt;
-else
-    pip install -r ./requirements.txt;
-fi
+echo ;
+/usr/local/bin/python3 -m pip install -r ./requirements.txt;
+echo ;
 echo "Installed requirements";
 
-# Compile
-echo "Compiling TypeScript";
-npx tsc -p ./tsconfig.json;
-echo "Code compiled successfully";
-
 # Start
+echo ;
 echo "Starting GWPC Check-in 2.0";
-npm start;
+/usr/local/bin/python3 main.py;
