@@ -70,7 +70,6 @@ class CreateUser(Base):
         if not fullname:
             messagebox.showerror('Error', 'Please enter your full name.')
         elif not re.match('[a-zA-Z0-9]+@hdsb.ca', schoolemail):
-            print(f'"{schoolemail}"')
             messagebox.showerror('Error', 'Please enter your school email address.')
         elif not address:
             messagebox.showerror('Error', 'Please enter your address.')
