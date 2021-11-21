@@ -41,17 +41,17 @@ class App(Base):
         credits_frame = Frame(self, background='#101414')
 
         # Made by Jason
-        madeby_link = Label(credits_frame, text='Made by Jason', font=('*', 18), fg='cyan', cursor='hand2', background='#101414')
+        madeby_link = Label(credits_frame, text='Made by Jason', font=('*', 14), fg='cyan', cursor='hand2', background='#101414')
         madeby_link.pack(side=LEFT, padx=30)
         madeby_link.bind('<Button-1>', lambda e: webbrowser.open_new_tab('https://jasonli0616.dev'))
 
         # Push data
-        pushdata_link = Label(credits_frame, text='Push data', font=('*', 18), fg='cyan', cursor='hand2', background='#101414')
+        pushdata_link = Label(credits_frame, text='Push data', font=('*', 14), fg='cyan', cursor='hand2', background='#101414')
         pushdata_link.pack(side=LEFT, padx=30)
         pushdata_link.bind('<Button-1>', self.push_data)
 
         # Acknowledgements
-        acknowledgement_link = Label(credits_frame, text='Acknowledgements', font=('*', 18), fg='cyan', cursor='hand2', background='#101414')
+        acknowledgement_link = Label(credits_frame, text='Acknowledgements', font=('*', 14), fg='cyan', cursor='hand2', background='#101414')
         acknowledgement_link.pack(side=LEFT, padx=30)
         acknowledgement_link.bind('<Button-1>', lambda e: Acknowledgements().mainloop())
 
