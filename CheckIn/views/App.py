@@ -18,7 +18,7 @@ class App(Base):
         input_frame2 = Frame(input_frame, background='#101414')
 
         # Student ID Label
-        studentid_label = Label(input_frame2, text='Student ID: ', font=('*', 20), background='#101414')
+        studentid_label = Label(input_frame2, text='Student ID: ', font=('*', 20), background='#101414', foreground='white')
         studentid_label.pack(side=LEFT)
 
         # Input

@@ -23,11 +23,11 @@ class Base(Toplevel):
         # Title bar frame
         titlebar_frame = Frame(titlebar_bg_frame, background='#22252a')
         # Title bar logo
-        logo_label = Label(titlebar_frame, image=logo, background='#22252a')
+        logo_label = Label(titlebar_frame, image=logo, background='#22252a', foreground='white')
         logo_label.image = logo
         logo_label.pack(side=LEFT)
         # Title
-        title = Label(titlebar_frame, text=titlebar, height=2, font=('*', 32), background='#22252a')
+        title = Label(titlebar_frame, text=titlebar, height=2, font=('*', 32), background='#22252a', foreground='white')
         title.pack(side=LEFT)
         # Pack frames
         titlebar_frame.pack()

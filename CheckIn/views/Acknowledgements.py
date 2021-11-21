@@ -17,7 +17,7 @@ class Acknowledgements(Base):
         acknowledgements_frame = Frame(self, background='#101414', highlightbackground='white', highlightcolor='white', highlightthickness=1, pady=30)
 
         # Subtitle
-        Label(acknowledgements_frame, text='GWPC Check-in 2.0 is made with open source libraries', font=('*', 25), background='#101414').pack()
+        Label(acknowledgements_frame, text='GWPC Check-in 2.0 is made with open source libraries', font=('*', 25), background='#101414', foreground='white').pack()
 
         # Libraries
         for library in data:

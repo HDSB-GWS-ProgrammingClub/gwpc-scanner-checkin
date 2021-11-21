@@ -16,35 +16,35 @@ class CreateUser(Base):
         # Full name
         fullname_frame = Frame(signup_frame, background='#101414', pady=7)
         fullname_frame.pack(fill=BOTH)
-        Label(fullname_frame, text='Full name: ', background='#101414', anchor='w').pack(fill=BOTH)
+        Label(fullname_frame, text='Full name: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
         self.fullname_entry = ttk.Entry(signup_frame, background='#101414', width=60)
         self.fullname_entry.pack(ipady=3)
 
         # School email
         schoolemail_frame = Frame(signup_frame, background='#101414', pady=7)
         schoolemail_frame.pack(fill=BOTH)
-        Label(schoolemail_frame, text='School email: ', background='#101414', anchor='w').pack(fill=BOTH)
+        Label(schoolemail_frame, text='School email: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
         self.schoolemail_entry = ttk.Entry(signup_frame, background='#101414', width=60)
         self.schoolemail_entry.pack(ipady=3)
 
         # Phone number
         phonenumber_frame = Frame(signup_frame, background='#101414', pady=7)
         phonenumber_frame.pack(fill=BOTH)
-        Label(phonenumber_frame, text='Phone number: ', background='#101414', anchor='w').pack(fill=BOTH)
+        Label(phonenumber_frame, text='Phone number: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
         self.phonenumber_entry = ttk.Entry(signup_frame, background='#101414', width=60)
         self.phonenumber_entry.pack(ipady=3)
 
         # Address
         address_frame = Frame(signup_frame, background='#101414', pady=7)
         address_frame.pack(fill=BOTH)
-        Label(address_frame, text='Address: ', background='#101414', anchor='w').pack(fill=BOTH)
+        Label(address_frame, text='Address: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
         self.address_entry = ttk.Entry(signup_frame, background='#101414', width=60)
         self.address_entry.pack(ipady=3)
 
         # Student ID
         studentID_frame = Frame(signup_frame, background='#101414', pady=7)
         studentID_frame.pack(fill=BOTH)
-        Label(studentID_frame, text='Student ID: ', background='#101414', anchor='w').pack(fill=BOTH)
+        Label(studentID_frame, text='Student ID: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
         self.studentID_entry = ttk.Entry(signup_frame, background='#101414', width=60)
         self.studentID_entry.pack(ipady=3)
         self.studentID_entry.insert(0, studentID)
