@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk as ttk
 from tkinter import messagebox
 from .Base import Base
-from CheckIn.User import User
+from ..User import User
 import re
 
 class CreateUser(Base):
