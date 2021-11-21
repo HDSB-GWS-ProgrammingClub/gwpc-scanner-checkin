@@ -19,8 +19,7 @@ users_collection = db['users']
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_name(f'{os.getcwd()}/creds.json', scope)
 gspread_client = gspread.authorize(creds)
-# checkin_sheet = gspread_client.open('GWPC Check-in 2.0').sheet1
-checkin_sheet = gspread_client.open('GWPC Check-in 2.0 Test').sheet1
+checkin_sheet = gspread_client.open('GWPC Check-in 2.0').sheet1
 
 # Initialize SQLite
 db_connection = sqlite3.connect('./data.db')
