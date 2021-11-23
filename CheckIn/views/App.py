@@ -74,6 +74,7 @@ class App(Base):
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
         
         self.studentid_entry.delete(0, END)
+        self.studentid_entry.focus()
     
     def push_data(self, *args):
 
