@@ -22,5 +22,6 @@ def on_close():
     root.destroy()
 
 app.protocol('WM_DELETE_WINDOW', on_close)
+root.protocol('WM_DELETE_WINDOW', on_close)
 
 root.mainloop()
