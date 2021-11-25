@@ -11,7 +11,7 @@ import webbrowser
 class App(Base):
     '''Main GUI'''
     def __init__(self):
-        super().__init__('800x600')
+        super().__init__(geometry='800x600')
 
         # Frame for input section
         input_frame = Frame(self, background='#101414')

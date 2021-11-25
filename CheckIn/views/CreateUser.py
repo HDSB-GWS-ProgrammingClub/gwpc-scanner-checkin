@@ -8,7 +8,7 @@ import re
 class CreateUser(Base):
     '''Create user GUI'''
     def __init__(self, studentID: int):
-        super().__init__('575x575', title='Sign up', titlebar='Sign up')
+        super().__init__(geometry='575x575', title='Sign up')
 
         # Frame for inputs
         signup_frame = Frame(self, background='#101414', highlightbackground='white', highlightcolor='white', highlightthickness=1, pady=30)

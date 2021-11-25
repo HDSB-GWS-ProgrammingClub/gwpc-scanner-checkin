@@ -7,7 +7,7 @@ import webbrowser
 class Acknowledgements(Base):
     '''Acknowledgements API'''
     def __init__(self):
-        super().__init__('600x700', 'Acknowledgements', 'Acknowledgements')
+        super().__init__(title='Acknowledgements')
 
         # Get data
         with open('acknowledgements.json', 'r') as f:
