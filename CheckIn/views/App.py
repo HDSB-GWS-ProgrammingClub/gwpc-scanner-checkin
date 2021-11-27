@@ -62,20 +62,21 @@ class App(Base):
 
         studentID = self.studentid_entry.get().strip()
 
+        self.studentid_entry.delete(0, END)
+        self.studentid_entry.focus()
+
         if studentID.isnumeric():
-            
             if User.check_user_exists(studentID):
+                # If user exists, check-in
                 checkedin_info = User.checkin_user(studentID)
                 messagebox.showinfo('Checked-in', f'Checked-in user {checkedin_info[0]} at {checkedin_info[1]}.')
             else:
+                # Else create user
                 CreateUser(studentID).mainloop()
-
         else:
+            # User does not exist
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
-        
-        self.studentid_entry.delete(0, END)
-        self.studentid_entry.focus()
-    
+
     def push_data(self, *args):
 
         Database.push_data()

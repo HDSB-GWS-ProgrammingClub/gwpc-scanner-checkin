@@ -17,9 +17,9 @@ def on_close():
 
     messagebox.showinfo('Pushing data', 'Pushing data...')
     CheckIn.Database.push_data()
-    CheckIn.Database.shutdown()
     messagebox.showinfo('Updated data', 'Data has been updated.')
     root.destroy()
+    CheckIn.Database.shutdown()
 
 app.protocol('WM_DELETE_WINDOW', on_close)
 root.protocol('WM_DELETE_WINDOW', on_close)

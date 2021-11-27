@@ -71,13 +71,17 @@ class CreateUser(Base):
             messagebox.showerror('Error', 'Please enter your full name.')
         elif not re.match('[a-zA-Z0-9]+@hdsb.ca', schoolemail):
             messagebox.showerror('Error', 'Please enter your school email address.')
+        elif not phonenumber.isnumeric() and not re.match(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$', phonenumber):
+            messagebox.showerror('Error', 'Please enter your phone number.')
         elif not address:
             messagebox.showerror('Error', 'Please enter your address.')
-        elif not phonenumber.isalnum() or not re.match('^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$', phonenumber):
-            messagebox.showerror('Error', 'Please enter your phone number.')
         elif not studentID.isnumeric():
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
         else:
+            # Create user
             User.create_new_user(fullname, schoolemail, phonenumber, address, int(studentID))
-            messagebox.showinfo('User created', f'Created new user {fullname}.')
+            # Check in user
+            checkedin_info = User.checkin_user(studentID)
+            # Confirmation
+            messagebox.showinfo('User created', f'Created new user {fullname}, and checked in at {checkedin_info[1]}.')
             self.destroy()
