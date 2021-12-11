@@ -1,0 +1,15 @@
+import requests
+
+class Internet:
+    '''Methods to interact with the internet'''
+    def connected_to_internet():
+        '''
+        Check if connected to the internet
+        
+        Returns: boolean
+        '''
+        try:
+            requests.get('https://google.com')
+            return True
+        except requests.exceptions.ConnectionError:
+            return False

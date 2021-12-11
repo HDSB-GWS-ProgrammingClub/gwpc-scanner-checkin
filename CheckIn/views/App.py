@@ -6,6 +6,7 @@ from .CreateUser import CreateUser
 from .Acknowledgements import Acknowledgements
 from ..User import User
 from ..Database import Database
+from ..Internet import Internet
 import webbrowser
 
 class App(Base):
@@ -78,7 +79,15 @@ class App(Base):
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
 
     def push_data(self, *args):
+        if Internet.connected_to_internet():
+            # If connected to the internet
 
-        Database.push_data()
-        Database.pull_data()
-        messagebox.showinfo('Updated data', 'Data has been updated.')
+            # Push data, then pull data
+            Database.push_data()
+            Database.pull_data()
+            messagebox.showinfo('Updated data', 'Data has been updated.')
+        else:
+            # If not connected to the internet, ask to retry
+            retry = messagebox.askretrycancel('Error', 'You are not connected to the internet. Connect to the internet and try again.')
+            if retry:
+                self.push_data()
