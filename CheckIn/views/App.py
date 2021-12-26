@@ -9,8 +9,10 @@ from ..Database import Database
 from ..Internet import Internet
 import webbrowser
 
+
 class App(Base):
-    '''Main GUI'''
+    """Main GUI"""
+
     def __init__(self):
         super().__init__(geometry='800x600')
 
@@ -19,13 +21,14 @@ class App(Base):
         input_frame2 = Frame(input_frame, background='#101414')
 
         # Student ID Label
-        studentid_label = Label(input_frame2, text='Student ID: ', font=('*', 20), background='#101414', foreground='white')
-        studentid_label.pack(side=LEFT)
+        studentID_label = Label(input_frame2, text='Student ID: ', font=('*', 20), background='#101414',
+                                foreground='white')
+        studentID_label.pack(side=LEFT)
 
         # Input
-        self.studentid_entry = ttk.Entry(input_frame2, background='#101414', width=40)
-        self.studentid_entry.pack(ipady=3, side=LEFT)
-        self.studentid_entry.focus()
+        self.studentID_entry = ttk.Entry(input_frame2, background='#101414', width=40)
+        self.studentID_entry.pack(ipady=3, side=LEFT)
+        self.studentID_entry.focus()
 
         input_frame2.pack()
 
@@ -37,40 +40,42 @@ class App(Base):
 
         input_frame.pack(pady=(20, 0))
 
-
         # Frame for credits links
         credits_frame = Frame(self, background='#101414')
 
         # Made by Jason
-        madeby_link = Label(credits_frame, text='Made by Jason', font=('*', 14), fg='cyan', cursor='hand2', background='#101414')
+        madeby_link = Label(credits_frame, text='Made by Jason', font=('*', 14), fg='cyan', cursor='hand2',
+                            background='#101414')
         madeby_link.pack(side=LEFT, padx=30)
         madeby_link.bind('<Button-1>', lambda e: webbrowser.open_new_tab('https://jasonli0616.dev'))
 
         # Push data
-        pushdata_link = Label(credits_frame, text='Push data', font=('*', 14), fg='cyan', cursor='hand2', background='#101414')
+        pushdata_link = Label(credits_frame, text='Push data', font=('*', 14), fg='cyan', cursor='hand2',
+                              background='#101414')
         pushdata_link.pack(side=LEFT, padx=30)
         pushdata_link.bind('<Button-1>', self.push_data)
 
         # Acknowledgements
-        acknowledgement_link = Label(credits_frame, text='Acknowledgements', font=('*', 14), fg='cyan', cursor='hand2', background='#101414')
+        acknowledgement_link = Label(credits_frame, text='Acknowledgements', font=('*', 14), fg='cyan', cursor='hand2',
+                                     background='#101414')
         acknowledgement_link.pack(side=LEFT, padx=30)
         acknowledgement_link.bind('<Button-1>', lambda e: Acknowledgements().mainloop())
 
         credits_frame.pack(side=BOTTOM, pady=(0, 30))
-    
+
     def checkin(self, *args):
-        '''Check in user'''
+        """Check in user"""
 
-        studentID = self.studentid_entry.get().strip()
+        studentID = self.studentID_entry.get().strip()
 
-        self.studentid_entry.delete(0, END)
-        self.studentid_entry.focus()
+        self.studentID_entry.delete(0, END)
+        self.studentID_entry.focus()
 
         if studentID.isnumeric():
             if User.check_user_exists(studentID):
                 # If user exists, check-in
-                checkedin_info = User.checkin_user(studentID)
-                messagebox.showinfo('Checked-in', f'Checked-in user {checkedin_info[0]} at {checkedin_info[1]}.')
+                checked_in_info = User.checkin_user(studentID)
+                messagebox.showinfo('Checked-in', f'Checked-in user {checked_in_info[0]} at {checked_in_info[1]}.')
             else:
                 # Else create user
                 CreateUser(studentID).mainloop()
@@ -78,7 +83,7 @@ class App(Base):
             # User does not exist
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
 
-    def push_data(self, *args):
+    def push_data(self, *_):
         if Internet.connected_to_internet():
             # If connected to the internet
 
@@ -88,6 +93,7 @@ class App(Base):
             messagebox.showinfo('Updated data', 'Data has been updated.')
         else:
             # If not connected to the internet, ask to retry
-            retry = messagebox.askretrycancel('Error', 'You are not connected to the internet. Connect to the internet and try again.')
+            retry = messagebox.askretrycancel('Error',
+                                              'You are not connected to the internet. Connect to the internet and try again.')
             if retry:
                 self.push_data()

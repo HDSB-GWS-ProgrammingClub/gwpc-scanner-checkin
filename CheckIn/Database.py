@@ -16,7 +16,8 @@ db = mongodb_client['Cluster0']
 users_collection = db['users']
 
 # Config GSpread
-scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive']
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/spreadsheets',
+         'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_name(f'{os.getcwd()}/creds.json', scope)
 gspread_client = gspread.authorize(creds)
 checkin_sheet = gspread_client.open('GWPC Check-in 2.0').sheet1
@@ -26,11 +27,12 @@ db_connection = sqlite3.connect('./data.db')
 db_cursor = db_connection.cursor()
 
 
-
 class Database:
-    '''Methods to interact with database'''
+    """Methods to interact with database"""
+
+    @staticmethod
     def pull_data():
-        '''Pulls data from MongoDB and stores in SQLite'''
+        """Pulls data from MongoDB and stores in SQLite"""
 
         # Get all users from MongoDB
         users = []
@@ -38,36 +40,37 @@ class Database:
 
         # Clear tables
         db_cursor.execute('DROP TABLE IF EXISTS users')
-        db_cursor.execute('DROP TABLE IF EXISTS checkedin')
+        db_cursor.execute('DROP TABLE IF EXISTS checked_in')
 
         # Create tables
         db_cursor.execute('''CREATE TABLE users
                             (name TEXT, email TEXT, phonenumber TEXT, address TEXT, studentID TEXT)''')
-        db_cursor.execute('''CREATE TABLE checkedin
+        db_cursor.execute('''CREATE TABLE checked_in
                             (name TEXT, email TEXT, phonenumber TEXT, address TEXT, studentID TEXT, time TEXT)''')
 
         # Write users to local SQLite DB
         for user in users:
             db_cursor.execute('''INSERT INTO users
                                 VALUES (:name, :email, :phonenumber, :address, :studentID)''',
-                {
-                    'name': user['name'],
-                    'email': user['email'],
-                    'phonenumber': user['phonenumber'],
-                    'address': user['address'],
-                    'studentID': user['studentID']
-                }
-            )
+                              {
+                                  'name': user['name'],
+                                  'email': user['email'],
+                                  'phonenumber': user['phonenumber'],
+                                  'address': user['address'],
+                                  'studentID': user['studentID']
+                              }
+                              )
         db_connection.commit()
-    
+
+    @staticmethod
     def push_data():
-        '''Pushes data to MongoDB/Google Sheet'''
+        """Pushes data to MongoDB/Google Sheet"""
 
         db_cursor.execute('SELECT * FROM users')
         users = db_cursor.fetchall()
 
-        db_cursor.execute('SELECT * FROM checkedin')
-        checkedin = db_cursor.fetchall()
+        db_cursor.execute('SELECT * FROM checked_in')
+        checked_in = db_cursor.fetchall()
 
         # Remove duplicate users
         new_users = []
@@ -87,11 +90,12 @@ class Database:
         if new_users:
             users_collection.insert_many(new_users)
 
-        for i in checkedin:
+        for i in checked_in:
             checkin_sheet.insert_row(i, 2)
-    
+
+    @staticmethod
     def shutdown():
-        '''Delete SQLite file on close'''
+        """Delete SQLite file on close"""
 
         if platform.system() == 'Windows':
             subprocess.call(['del', '/f', 'data.db'], shell=True)

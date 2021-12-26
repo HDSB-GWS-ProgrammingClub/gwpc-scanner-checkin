@@ -5,13 +5,16 @@ from .Base import Base
 from ..User import User
 import re
 
+
 class CreateUser(Base):
-    '''Create user GUI'''
+    """Create user GUI"""
+
     def __init__(self, studentID: int):
         super().__init__(geometry='575x575', title='Sign up')
 
         # Frame for inputs
-        signup_frame = Frame(self, background='#101414', highlightbackground='white', highlightcolor='white', highlightthickness=1, pady=30)
+        signup_frame = Frame(self, background='#101414', highlightbackground='white', highlightcolor='white',
+                             highlightthickness=1, pady=30)
 
         # Full name
         fullname_frame = Frame(signup_frame, background='#101414', pady=7)
@@ -21,16 +24,18 @@ class CreateUser(Base):
         self.fullname_entry.pack(ipady=3)
 
         # School email
-        schoolemail_frame = Frame(signup_frame, background='#101414', pady=7)
-        schoolemail_frame.pack(fill=BOTH)
-        Label(schoolemail_frame, text='School email: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
-        self.schoolemail_entry = ttk.Entry(signup_frame, background='#101414', width=60)
-        self.schoolemail_entry.pack(ipady=3)
+        school_email_frame = Frame(signup_frame, background='#101414', pady=7)
+        school_email_frame.pack(fill=BOTH)
+        Label(school_email_frame, text='School email: ', background='#101414', anchor='w', foreground='white').pack(
+            fill=BOTH)
+        self.school_email_entry = ttk.Entry(signup_frame, background='#101414', width=60)
+        self.school_email_entry.pack(ipady=3)
 
         # Phone number
         phonenumber_frame = Frame(signup_frame, background='#101414', pady=7)
         phonenumber_frame.pack(fill=BOTH)
-        Label(phonenumber_frame, text='Phone number: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
+        Label(phonenumber_frame, text='Phone number: ', background='#101414', anchor='w', foreground='white').pack(
+            fill=BOTH)
         self.phonenumber_entry = ttk.Entry(signup_frame, background='#101414', width=60)
         self.phonenumber_entry.pack(ipady=3)
 
@@ -44,24 +49,23 @@ class CreateUser(Base):
         # Student ID
         studentID_frame = Frame(signup_frame, background='#101414', pady=7)
         studentID_frame.pack(fill=BOTH)
-        Label(studentID_frame, text='Student ID: ', background='#101414', anchor='w', foreground='white').pack(fill=BOTH)
+        Label(studentID_frame, text='Student ID: ', background='#101414', anchor='w', foreground='white').pack(
+            fill=BOTH)
         self.studentID_entry = ttk.Entry(signup_frame, background='#101414', width=60)
         self.studentID_entry.pack(ipady=3)
         self.studentID_entry.insert(0, studentID)
 
         signup_frame.pack()
 
-
-
         # Sign up button
         signup_button = ttk.Button(self, text='Sign up', command=self.sign_up)
         signup_button.pack()
 
         self.bind('<Return>', self.sign_up)
-    
+
     def sign_up(self, *args):
         fullname = self.fullname_entry.get().strip()
-        schoolemail = self.schoolemail_entry.get().strip()
+        school_email = self.school_email_entry.get().strip()
         phonenumber = self.phonenumber_entry.get().strip()
         address = self.address_entry.get().strip()
         studentID = self.studentID_entry.get().strip()
@@ -69,9 +73,10 @@ class CreateUser(Base):
         # Validation
         if not fullname:
             messagebox.showerror('Error', 'Please enter your full name.')
-        elif not re.match('[a-zA-Z0-9]+@hdsb.ca', schoolemail):
+        elif not re.match('[a-zA-Z0-9]+@hdsb.ca', school_email):
             messagebox.showerror('Error', 'Please enter your school email address.')
-        elif not phonenumber.isnumeric() and not re.match(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$', phonenumber):
+        elif not phonenumber.isnumeric() and not re.match(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$',
+                                                           phonenumber):
             messagebox.showerror('Error', 'Please enter your phone number.')
         elif not address:
             messagebox.showerror('Error', 'Please enter your address.')
@@ -79,9 +84,9 @@ class CreateUser(Base):
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
         else:
             # Create user
-            User.create_new_user(fullname, schoolemail, phonenumber, address, int(studentID))
+            User.create_new_user(fullname, school_email, phonenumber, address, int(studentID))
             # Check in user
-            checkedin_info = User.checkin_user(studentID)
+            checked_in_info = User.checkin_user(studentID)
             # Confirmation
-            messagebox.showinfo('User created', f'Created new user {fullname}, and checked in at {checkedin_info[1]}.')
+            messagebox.showinfo('User created', f'Created new user {fullname}, and checked in at {checked_in_info[1]}.')
             self.destroy()
