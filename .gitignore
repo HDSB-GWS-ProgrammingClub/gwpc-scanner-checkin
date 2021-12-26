@@ -201,3 +201,4 @@ $RECYCLE.BIN/
 
 creds.json
 *.db
+.idea/
