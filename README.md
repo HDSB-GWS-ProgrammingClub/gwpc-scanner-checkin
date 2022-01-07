@@ -2,6 +2,8 @@
 
 The HDSB requires information for contact tracing before entering in-person club meetings. This program is to ease the process.
 
+### [Documentation available here](https://hdsb-gws-programmingclub.github.io/gwpc-scanner-checkin/)
+
 ## How it works
 This program will be run on a computer with a barcode scanner connected. The program will first pull all the data from the remote database into a local database.\
 The barcode scanner will scan a student ID, and enter it into the program. The program will then check if the user already exists in the (local) database.\

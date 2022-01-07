@@ -8,7 +8,7 @@ root.geometry('0x0')
 
 
 def pull_data():
-    # Pull data
+    """Pull data on app launch"""
     if CheckIn.Internet.connected_to_internet():
         # If connected to the internet
 
