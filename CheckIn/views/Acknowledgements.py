@@ -10,9 +10,16 @@ class Acknowledgements(Base):
     def __init__(self):
         super().__init__(title='Acknowledgements')
 
-        # Get data
+        self.draw_window(self._get_data())
+
+    @staticmethod
+    def _get_data() -> list:
+        """Get libraries from JSON file"""
         with open('acknowledgements.json', 'r') as f:
-            data = json.load(f)
+            return json.load(f)
+
+    def draw_window(self, data: list):
+        """Draws to screen"""
 
         # Frame for acknowledgements
         acknowledgements_frame = Frame(self, background='#101414', highlightbackground='white', highlightcolor='white',

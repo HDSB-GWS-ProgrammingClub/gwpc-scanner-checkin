@@ -1,6 +1,7 @@
-from tkinter import *
-from PIL import ImageTk, Image
 from abc import ABC
+from tkinter import *
+
+from PIL import ImageTk, Image
 
 
 class Base(Toplevel, ABC):
@@ -9,11 +10,24 @@ class Base(Toplevel, ABC):
     def __init__(self, geometry: str = '', title: str = ''):
         super().__init__()
 
+        self._configure_window(geometry, title)
+        self._draw_window(geometry, title)
+
+    def _configure_window(self, geometry: str, title: str):
+        """Configure the window"""
+
+        # Set background colour
         self.config(background='#101414')
 
-        geometry and self.geometry(geometry)
+        # Set window size (if applicable)
+        if geometry:
+            self.geometry(geometry)
 
+        # Set window title
         self.title(f'GWPC Check-in 2.0{f" - {title}" if title else ""}')
+
+    def _draw_window(self, geometry: str, title: str):
+        """Draws to screen"""
 
         # Logo
         logo = ImageTk.PhotoImage(Image.open('gwpc-logo.png').resize((60, 60)), Image.ANTIALIAS)

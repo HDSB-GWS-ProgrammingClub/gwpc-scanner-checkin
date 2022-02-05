@@ -1,13 +1,14 @@
+import webbrowser
 from tkinter import *
-from tkinter import ttk as ttk
 from tkinter import messagebox
+from tkinter import ttk as ttk
+
+from .Acknowledgements import Acknowledgements
 from .Base import Base
 from .CreateUser import CreateUser
-from .Acknowledgements import Acknowledgements
-from ..User import User
 from ..Database import Database
 from ..Internet import Internet
-import webbrowser
+from ..User import User
 
 
 class App(Base):
@@ -15,6 +16,14 @@ class App(Base):
 
     def __init__(self):
         super().__init__(geometry='800x600')
+
+        self._pull_data()
+        self.draw_window()
+
+        self.protocol('WM_DELETE_WINDOW', self._on_close())
+
+    def draw_window(self):
+        """Draws to screen"""
 
         # Frame for input section
         input_frame = Frame(self, background='#101414')
@@ -83,6 +92,20 @@ class App(Base):
             # User does not exist
             messagebox.showerror('Error', 'Please scan your student ID barcode.')
 
+    def _pull_data(self):
+        """Pull data on app launch"""
+        if Internet.connected_to_internet():
+            # If connected to the internet
+
+            # Pull data
+            Database.pull_data()
+        else:
+            # If not connected to the internet, ask to retry
+            retry = messagebox.askretrycancel('Error',
+                                              'You are not connected to the internet. Connect to the internet and try again.')
+            if retry:
+                self.pull_data()
+
     def push_data(self, *_):
         if Internet.connected_to_internet():
             # If connected to the internet
@@ -97,3 +120,26 @@ class App(Base):
                                               'You are not connected to the internet. Connect to the internet and try again.')
             if retry:
                 self.push_data()
+
+    def _on_close(self):
+        """Push data on close"""
+
+        if Internet.connected_to_internet():
+            # If connected to the internet
+
+            # Push data
+            messagebox.showinfo('Pushing data', 'Pushing data...')
+            Database.push_data()
+            messagebox.showinfo('Updated data', 'Data has been updated.')
+
+            # Destroy GUI
+            self.destroy()
+
+            # Delete local database
+            Database.shutdown()
+        else:
+            # If not connected to the internet, ask to retry
+            retry = messagebox.askretrycancel('Error',
+                                              'You are not connected to the internet. Connect to the internet and try again.')
+            if retry:
+                self._on_close()

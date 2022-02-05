@@ -1,9 +1,10 @@
+import re
 from tkinter import *
-from tkinter import ttk as ttk
 from tkinter import messagebox
+from tkinter import ttk as ttk
+
 from .Base import Base
 from ..User import User
-import re
 
 
 class CreateUser(Base):
@@ -11,6 +12,11 @@ class CreateUser(Base):
 
     def __init__(self, studentID: int):
         super().__init__(geometry='575x575', title='Sign up')
+
+        self.draw_window(studentID)
+
+    def draw_window(self, studentID: int):
+        """Draws to screen"""
 
         # Frame for inputs
         signup_frame = Frame(self, background='#101414', highlightbackground='white', highlightcolor='white',
@@ -76,7 +82,7 @@ class CreateUser(Base):
         elif not re.match('[a-zA-Z0-9]+@hdsb.ca', school_email):
             messagebox.showerror('Error', 'Please enter your school email address.')
         elif not phonenumber.isnumeric() and not re.match(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$',
-                                                           phonenumber):
+                                                          phonenumber):
             messagebox.showerror('Error', 'Please enter your phone number.')
         elif not address:
             messagebox.showerror('Error', 'Please enter your address.')
