@@ -26,10 +26,14 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from tkinter import *
-from PIL import ImageTk, Image
-from abc import ABC
+<pre><code class="python">from abc import ABC
+from tkinter import *
 
+from PIL import ImageTk, Image
+
+# Hide root
+root = Tk()
+root.withdraw()
 
 class Base(Toplevel, ABC):
     &#34;&#34;&#34;The base class for the GUI&#34;&#34;&#34;
@@ -37,11 +41,24 @@ class Base(Toplevel, ABC):
     def __init__(self, geometry: str = &#39;&#39;, title: str = &#39;&#39;):
         super().__init__()
 
+        self._configure_window(geometry, title)
+        self._draw_window(geometry, title)
+
+    def _configure_window(self, geometry: str, title: str):
+        &#34;&#34;&#34;Configure the window&#34;&#34;&#34;
+
+        # Set background colour
         self.config(background=&#39;#101414&#39;)
 
-        geometry and self.geometry(geometry)
+        # Set window size (if applicable)
+        if geometry:
+            self.geometry(geometry)
 
+        # Set window title
         self.title(f&#39;GWPC Check-in 2.0{f&#34; - {title}&#34; if title else &#34;&#34;}&#39;)
+
+    def _draw_window(self, geometry: str, title: str):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
 
         # Logo
         logo = ImageTk.PhotoImage(Image.open(&#39;gwpc-logo.png&#39;).resize((60, 60)), Image.ANTIALIAS)
@@ -93,11 +110,24 @@ use, visual, width.</p></div>
     def __init__(self, geometry: str = &#39;&#39;, title: str = &#39;&#39;):
         super().__init__()
 
+        self._configure_window(geometry, title)
+        self._draw_window(geometry, title)
+
+    def _configure_window(self, geometry: str, title: str):
+        &#34;&#34;&#34;Configure the window&#34;&#34;&#34;
+
+        # Set background colour
         self.config(background=&#39;#101414&#39;)
 
-        geometry and self.geometry(geometry)
+        # Set window size (if applicable)
+        if geometry:
+            self.geometry(geometry)
 
+        # Set window title
         self.title(f&#39;GWPC Check-in 2.0{f&#34; - {title}&#34; if title else &#34;&#34;}&#39;)
+
+    def _draw_window(self, geometry: str, title: str):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
 
         # Logo
         logo = ImageTk.PhotoImage(Image.open(&#39;gwpc-logo.png&#39;).resize((60, 60)), Image.ANTIALIAS)

@@ -38,9 +38,20 @@ class Acknowledgements(Base):
     def __init__(self):
         super().__init__(title=&#39;Acknowledgements&#39;)
 
-        # Get data
+        self.draw_window(self._get_data())
+
+    @staticmethod
+    def _get_data() -&gt; list:
+        &#34;&#34;&#34;
+        Get libraries from JSON file
+
+        Returns: list of libraries
+        &#34;&#34;&#34;
         with open(&#39;acknowledgements.json&#39;, &#39;r&#39;) as f:
-            data = json.load(f)
+            return json.load(f)
+
+    def draw_window(self, data: list):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
 
         # Frame for acknowledgements
         acknowledgements_frame = Frame(self, background=&#39;#101414&#39;, highlightbackground=&#39;white&#39;, highlightcolor=&#39;white&#39;,
@@ -89,9 +100,20 @@ use, visual, width.</p></div>
     def __init__(self):
         super().__init__(title=&#39;Acknowledgements&#39;)
 
-        # Get data
+        self.draw_window(self._get_data())
+
+    @staticmethod
+    def _get_data() -&gt; list:
+        &#34;&#34;&#34;
+        Get libraries from JSON file
+
+        Returns: list of libraries
+        &#34;&#34;&#34;
         with open(&#39;acknowledgements.json&#39;, &#39;r&#39;) as f:
-            data = json.load(f)
+            return json.load(f)
+
+    def draw_window(self, data: list):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
 
         # Frame for acknowledgements
         acknowledgements_frame = Frame(self, background=&#39;#101414&#39;, highlightbackground=&#39;white&#39;, highlightcolor=&#39;white&#39;,
@@ -119,6 +141,39 @@ use, visual, width.</p></div>
 <li>tkinter.Wm</li>
 <li>abc.ABC</li>
 </ul>
+<h3>Methods</h3>
+<dl>
+<dt id="gwpc-scanner-checkin.CheckIn.views.Acknowledgements.Acknowledgements.draw_window"><code class="name flex">
+<span>def <span class="ident">draw_window</span></span>(<span>self, data: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draws to screen</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_window(self, data: list):
+    &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
+
+    # Frame for acknowledgements
+    acknowledgements_frame = Frame(self, background=&#39;#101414&#39;, highlightbackground=&#39;white&#39;, highlightcolor=&#39;white&#39;,
+                                   highlightthickness=1, pady=20)
+
+    # Subtitle
+    Label(acknowledgements_frame, text=&#39;GWPC Check-in 2.0 is made with open source libraries&#39;, font=(&#39;*&#39;, 15),
+          background=&#39;#101414&#39;, foreground=&#39;white&#39;).pack()
+
+    # Libraries
+    for library in data:
+        link = Label(acknowledgements_frame, text=library, font=(&#39;*&#39;, 12), fg=&#39;cyan&#39;, cursor=&#39;hand2&#39;,
+                     background=&#39;#101414&#39;)
+        link.pack()
+        link.bind(&#39;&lt;Button-1&gt;&#39;, lambda e: webbrowser.open_new_tab(f&#39;https://github.com/{e.widget[&#34;text&#34;]}&#39;))
+
+    acknowledgements_frame.pack()</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 </dl>
 </section>
@@ -138,6 +193,9 @@ use, visual, width.</p></div>
 <ul>
 <li>
 <h4><code><a title="gwpc-scanner-checkin.CheckIn.views.Acknowledgements.Acknowledgements" href="#gwpc-scanner-checkin.CheckIn.views.Acknowledgements.Acknowledgements">Acknowledgements</a></code></h4>
+<ul class="">
+<li><code><a title="gwpc-scanner-checkin.CheckIn.views.Acknowledgements.Acknowledgements.draw_window" href="#gwpc-scanner-checkin.CheckIn.views.Acknowledgements.Acknowledgements.draw_window">draw_window</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

@@ -37,7 +37,7 @@ db_cursor = db_connection.cursor()
 class User:
     &#34;&#34;&#34;Methods to interact with users&#34;&#34;&#34;
 
-    def check_user_exists(studentID: int):
+    def check_user_exists(studentID: int) -&gt; bool:
         &#34;&#34;&#34;
         Check if user exists
 
@@ -53,7 +53,7 @@ class User:
         # Print whether user exists
         return bool(db_cursor.fetchone())
 
-    def create_new_user(name, email, phonenumber, address, studentID):
+    def create_new_user(name, email, phonenumber, address, studentID) -&gt; None:
         &#34;&#34;&#34;Create a new user&#34;&#34;&#34;
 
         data = {
@@ -69,7 +69,7 @@ class User:
                             VALUES (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;, data)
         db_connection.commit()
 
-    def checkin_user(studentID: int):
+    def checkin_user(studentID: int) -&gt; bool:
         &#34;&#34;&#34;
         Check-in user to the database
 
@@ -125,7 +125,7 @@ class User:
 <pre><code class="python">class User:
     &#34;&#34;&#34;Methods to interact with users&#34;&#34;&#34;
 
-    def check_user_exists(studentID: int):
+    def check_user_exists(studentID: int) -&gt; bool:
         &#34;&#34;&#34;
         Check if user exists
 
@@ -141,7 +141,7 @@ class User:
         # Print whether user exists
         return bool(db_cursor.fetchone())
 
-    def create_new_user(name, email, phonenumber, address, studentID):
+    def create_new_user(name, email, phonenumber, address, studentID) -&gt; None:
         &#34;&#34;&#34;Create a new user&#34;&#34;&#34;
 
         data = {
@@ -157,7 +157,7 @@ class User:
                             VALUES (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;, data)
         db_connection.commit()
 
-    def checkin_user(studentID: int):
+    def checkin_user(studentID: int) -&gt; bool:
         &#34;&#34;&#34;
         Check-in user to the database
 
@@ -194,7 +194,7 @@ class User:
 <h3>Methods</h3>
 <dl>
 <dt id="gwpc-scanner-checkin.CheckIn.User.User.check_user_exists"><code class="name flex">
-<span>def <span class="ident">check_user_exists</span></span>(<span>studentID: int)</span>
+<span>def <span class="ident">check_user_exists</span></span>(<span>studentID: int) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Check if user exists</p>
@@ -203,7 +203,7 @@ class User:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def check_user_exists(studentID: int):
+<pre><code class="python">def check_user_exists(studentID: int) -&gt; bool:
     &#34;&#34;&#34;
     Check if user exists
 
@@ -221,7 +221,7 @@ class User:
 </details>
 </dd>
 <dt id="gwpc-scanner-checkin.CheckIn.User.User.checkin_user"><code class="name flex">
-<span>def <span class="ident">checkin_user</span></span>(<span>studentID: int)</span>
+<span>def <span class="ident">checkin_user</span></span>(<span>studentID: int) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Check-in user to the database</p>
@@ -233,7 +233,7 @@ class User:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def checkin_user(studentID: int):
+<pre><code class="python">def checkin_user(studentID: int) -&gt; bool:
     &#34;&#34;&#34;
     Check-in user to the database
 
@@ -269,7 +269,7 @@ class User:
 </details>
 </dd>
 <dt id="gwpc-scanner-checkin.CheckIn.User.User.create_new_user"><code class="name flex">
-<span>def <span class="ident">create_new_user</span></span>(<span>name, email, phonenumber, address, studentID)</span>
+<span>def <span class="ident">create_new_user</span></span>(<span>name, email, phonenumber, address, studentID) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create a new user</p></div>
@@ -277,7 +277,7 @@ class User:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_new_user(name, email, phonenumber, address, studentID):
+<pre><code class="python">def create_new_user(name, email, phonenumber, address, studentID) -&gt; None:
     &#34;&#34;&#34;Create a new user&#34;&#34;&#34;
 
     data = {

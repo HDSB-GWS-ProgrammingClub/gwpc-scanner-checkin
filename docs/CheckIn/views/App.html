@@ -26,16 +26,17 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from tkinter import *
-from tkinter import ttk as ttk
+<pre><code class="python">import webbrowser
+from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk as ttk
+
+from .Acknowledgements import Acknowledgements
 from .Base import Base
 from .CreateUser import CreateUser
-from .Acknowledgements import Acknowledgements
-from ..User import User
 from ..Database import Database
 from ..Internet import Internet
-import webbrowser
+from ..User import User
 
 
 class App(Base):
@@ -43,6 +44,14 @@ class App(Base):
 
     def __init__(self):
         super().__init__(geometry=&#39;800x600&#39;)
+
+        self._pull_data()
+        self.draw_window()
+
+        self.protocol(&#39;WM_DELETE_WINDOW&#39;, self._on_close)
+
+    def draw_window(self):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
 
         # Frame for input section
         input_frame = Frame(self, background=&#39;#101414&#39;)
@@ -111,6 +120,20 @@ class App(Base):
             # User does not exist
             messagebox.showerror(&#39;Error&#39;, &#39;Please scan your student ID barcode.&#39;)
 
+    def _pull_data(self):
+        &#34;&#34;&#34;Pull data on app launch&#34;&#34;&#34;
+        if Internet.connected_to_internet():
+            # If connected to the internet
+
+            # Pull data
+            Database.pull_data()
+        else:
+            # If not connected to the internet, ask to retry
+            retry = messagebox.askretrycancel(&#39;Error&#39;,
+                                              &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
+            if retry:
+                self.pull_data()
+
     def push_data(self, *_):
         if Internet.connected_to_internet():
             # If connected to the internet
@@ -124,7 +147,30 @@ class App(Base):
             retry = messagebox.askretrycancel(&#39;Error&#39;,
                                               &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
             if retry:
-                self.push_data()</code></pre>
+                self.push_data()
+
+    def _on_close(self):
+        &#34;&#34;&#34;Push data on close&#34;&#34;&#34;
+
+        if Internet.connected_to_internet():
+            # If connected to the internet
+
+            # Push data
+            messagebox.showinfo(&#39;Pushing data&#39;, &#39;Pushing data...&#39;)
+            Database.push_data()
+            messagebox.showinfo(&#39;Updated data&#39;, &#39;Data has been updated.&#39;)
+
+            # Destroy GUI
+            self.destroy()
+
+            # Delete local database
+            Database.shutdown()
+        else:
+            # If not connected to the internet, ask to retry
+            retry = messagebox.askretrycancel(&#39;Error&#39;,
+                                              &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
+            if retry:
+                self._on_close()</code></pre>
 </details>
 </section>
 <section>
@@ -156,6 +202,14 @@ use, visual, width.</p></div>
     def __init__(self):
         super().__init__(geometry=&#39;800x600&#39;)
 
+        self._pull_data()
+        self.draw_window()
+
+        self.protocol(&#39;WM_DELETE_WINDOW&#39;, self._on_close)
+
+    def draw_window(self):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
+
         # Frame for input section
         input_frame = Frame(self, background=&#39;#101414&#39;)
         input_frame2 = Frame(input_frame, background=&#39;#101414&#39;)
@@ -223,6 +277,20 @@ use, visual, width.</p></div>
             # User does not exist
             messagebox.showerror(&#39;Error&#39;, &#39;Please scan your student ID barcode.&#39;)
 
+    def _pull_data(self):
+        &#34;&#34;&#34;Pull data on app launch&#34;&#34;&#34;
+        if Internet.connected_to_internet():
+            # If connected to the internet
+
+            # Pull data
+            Database.pull_data()
+        else:
+            # If not connected to the internet, ask to retry
+            retry = messagebox.askretrycancel(&#39;Error&#39;,
+                                              &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
+            if retry:
+                self.pull_data()
+
     def push_data(self, *_):
         if Internet.connected_to_internet():
             # If connected to the internet
@@ -236,7 +304,30 @@ use, visual, width.</p></div>
             retry = messagebox.askretrycancel(&#39;Error&#39;,
                                               &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
             if retry:
-                self.push_data()</code></pre>
+                self.push_data()
+
+    def _on_close(self):
+        &#34;&#34;&#34;Push data on close&#34;&#34;&#34;
+
+        if Internet.connected_to_internet():
+            # If connected to the internet
+
+            # Push data
+            messagebox.showinfo(&#39;Pushing data&#39;, &#39;Pushing data...&#39;)
+            Database.push_data()
+            messagebox.showinfo(&#39;Updated data&#39;, &#39;Data has been updated.&#39;)
+
+            # Destroy GUI
+            self.destroy()
+
+            # Delete local database
+            Database.shutdown()
+        else:
+            # If not connected to the internet, ask to retry
+            retry = messagebox.askretrycancel(&#39;Error&#39;,
+                                              &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
+            if retry:
+                self._on_close()</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -277,6 +368,66 @@ use, visual, width.</p></div>
     else:
         # User does not exist
         messagebox.showerror(&#39;Error&#39;, &#39;Please scan your student ID barcode.&#39;)</code></pre>
+</details>
+</dd>
+<dt id="gwpc-scanner-checkin.CheckIn.views.App.App.draw_window"><code class="name flex">
+<span>def <span class="ident">draw_window</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draws to screen</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_window(self):
+    &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
+
+    # Frame for input section
+    input_frame = Frame(self, background=&#39;#101414&#39;)
+    input_frame2 = Frame(input_frame, background=&#39;#101414&#39;)
+
+    # Student ID Label
+    studentID_label = Label(input_frame2, text=&#39;Student ID: &#39;, font=(&#39;*&#39;, 20), background=&#39;#101414&#39;,
+                            foreground=&#39;white&#39;)
+    studentID_label.pack(side=LEFT)
+
+    # Input
+    self.studentID_entry = ttk.Entry(input_frame2, background=&#39;#101414&#39;, width=40)
+    self.studentID_entry.pack(ipady=3, side=LEFT)
+    self.studentID_entry.focus()
+
+    input_frame2.pack()
+
+    # Check-in button
+    checkin_button = ttk.Button(input_frame, text=&#39;Check-in&#39;, command=self.checkin)
+    checkin_button.pack(side=RIGHT)
+
+    self.bind(&#39;&lt;Return&gt;&#39;, self.checkin)
+
+    input_frame.pack(pady=(20, 0))
+
+    # Frame for credits links
+    credits_frame = Frame(self, background=&#39;#101414&#39;)
+
+    # Made by Jason
+    madeby_link = Label(credits_frame, text=&#39;Made by Jason&#39;, font=(&#39;*&#39;, 14), fg=&#39;cyan&#39;, cursor=&#39;hand2&#39;,
+                        background=&#39;#101414&#39;)
+    madeby_link.pack(side=LEFT, padx=30)
+    madeby_link.bind(&#39;&lt;Button-1&gt;&#39;, lambda e: webbrowser.open_new_tab(&#39;https://jasonli0616.dev&#39;))
+
+    # Push data
+    pushdata_link = Label(credits_frame, text=&#39;Push data&#39;, font=(&#39;*&#39;, 14), fg=&#39;cyan&#39;, cursor=&#39;hand2&#39;,
+                          background=&#39;#101414&#39;)
+    pushdata_link.pack(side=LEFT, padx=30)
+    pushdata_link.bind(&#39;&lt;Button-1&gt;&#39;, self.push_data)
+
+    # Acknowledgements
+    acknowledgement_link = Label(credits_frame, text=&#39;Acknowledgements&#39;, font=(&#39;*&#39;, 14), fg=&#39;cyan&#39;, cursor=&#39;hand2&#39;,
+                                 background=&#39;#101414&#39;)
+    acknowledgement_link.pack(side=LEFT, padx=30)
+    acknowledgement_link.bind(&#39;&lt;Button-1&gt;&#39;, lambda e: Acknowledgements().mainloop())
+
+    credits_frame.pack(side=BOTTOM, pady=(0, 30))</code></pre>
 </details>
 </dd>
 <dt id="gwpc-scanner-checkin.CheckIn.views.App.App.push_data"><code class="name flex">
@@ -326,6 +477,7 @@ use, visual, width.</p></div>
 <h4><code><a title="gwpc-scanner-checkin.CheckIn.views.App.App" href="#gwpc-scanner-checkin.CheckIn.views.App.App">App</a></code></h4>
 <ul class="">
 <li><code><a title="gwpc-scanner-checkin.CheckIn.views.App.App.checkin" href="#gwpc-scanner-checkin.CheckIn.views.App.App.checkin">checkin</a></code></li>
+<li><code><a title="gwpc-scanner-checkin.CheckIn.views.App.App.draw_window" href="#gwpc-scanner-checkin.CheckIn.views.App.App.draw_window">draw_window</a></code></li>
 <li><code><a title="gwpc-scanner-checkin.CheckIn.views.App.App.push_data" href="#gwpc-scanner-checkin.CheckIn.views.App.App.push_data">push_data</a></code></li>
 </ul>
 </li>

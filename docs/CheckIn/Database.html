@@ -32,8 +32,6 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import dotenv
 import os
-import subprocess
-import platform
 
 dotenv.load_dotenv()
 
@@ -59,7 +57,7 @@ class Database:
     &#34;&#34;&#34;Methods to interact with database&#34;&#34;&#34;
 
     @staticmethod
-    def pull_data():
+    def pull_data() -&gt; None:
         &#34;&#34;&#34;Pulls data from MongoDB and stores in SQLite&#34;&#34;&#34;
 
         # Get all users from MongoDB
@@ -78,20 +76,18 @@ class Database:
 
         # Write users to local SQLite DB
         for user in users:
-            db_cursor.execute(&#39;&#39;&#39;INSERT INTO users
-                                VALUES (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;,
-                              {
-                                  &#39;name&#39;: user[&#39;name&#39;],
-                                  &#39;email&#39;: user[&#39;email&#39;],
-                                  &#39;phonenumber&#39;: user[&#39;phonenumber&#39;],
-                                  &#39;address&#39;: user[&#39;address&#39;],
-                                  &#39;studentID&#39;: user[&#39;studentID&#39;]
-                              }
-                              )
+            db_cursor.execute(&#39;&#39;&#39;INSERT INTO users VALUES
+                                (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;, {
+                                    &#39;name&#39;: user[&#39;name&#39;],
+                                    &#39;email&#39;: user[&#39;email&#39;],
+                                    &#39;phonenumber&#39;: user[&#39;phonenumber&#39;],
+                                    &#39;address&#39;: user[&#39;address&#39;],
+                                    &#39;studentID&#39;: user[&#39;studentID&#39;]
+            })
         db_connection.commit()
 
     @staticmethod
-    def push_data():
+    def push_data() -&gt; None:
         &#34;&#34;&#34;Pushes data to MongoDB/Google Sheet&#34;&#34;&#34;
 
         db_cursor.execute(&#39;SELECT * FROM users&#39;)
@@ -105,8 +101,7 @@ class Database:
         existing_users = [{k: v for k, v in d.items() if k != &#39;_id&#39;} for d in users_collection.find()]
 
         for i in users:
-            user = {
-                &#39;name&#39;: i[0],
+            user = {&#39;name&#39;: i[0],
                 &#39;email&#39;: i[1],
                 &#39;phonenumber&#39;: i[2],
                 &#39;address&#39;: i[3],
@@ -122,13 +117,9 @@ class Database:
             checkin_sheet.insert_row(i, 2)
 
     @staticmethod
-    def shutdown():
+    def shutdown() -&gt; None:
         &#34;&#34;&#34;Delete SQLite file on close&#34;&#34;&#34;
-
-        if platform.system() == &#39;Windows&#39;:
-            subprocess.call([&#39;del&#39;, &#39;/f&#39;, &#39;data.db&#39;], shell=True)
-        else:
-            subprocess.call([&#39;rm&#39;, &#39;data.db&#39;])</code></pre>
+        os.remove(&#39;data.db&#39;)</code></pre>
 </details>
 </section>
 <section>
@@ -153,7 +144,7 @@ class Database:
     &#34;&#34;&#34;Methods to interact with database&#34;&#34;&#34;
 
     @staticmethod
-    def pull_data():
+    def pull_data() -&gt; None:
         &#34;&#34;&#34;Pulls data from MongoDB and stores in SQLite&#34;&#34;&#34;
 
         # Get all users from MongoDB
@@ -172,20 +163,18 @@ class Database:
 
         # Write users to local SQLite DB
         for user in users:
-            db_cursor.execute(&#39;&#39;&#39;INSERT INTO users
-                                VALUES (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;,
-                              {
-                                  &#39;name&#39;: user[&#39;name&#39;],
-                                  &#39;email&#39;: user[&#39;email&#39;],
-                                  &#39;phonenumber&#39;: user[&#39;phonenumber&#39;],
-                                  &#39;address&#39;: user[&#39;address&#39;],
-                                  &#39;studentID&#39;: user[&#39;studentID&#39;]
-                              }
-                              )
+            db_cursor.execute(&#39;&#39;&#39;INSERT INTO users VALUES
+                                (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;, {
+                                    &#39;name&#39;: user[&#39;name&#39;],
+                                    &#39;email&#39;: user[&#39;email&#39;],
+                                    &#39;phonenumber&#39;: user[&#39;phonenumber&#39;],
+                                    &#39;address&#39;: user[&#39;address&#39;],
+                                    &#39;studentID&#39;: user[&#39;studentID&#39;]
+            })
         db_connection.commit()
 
     @staticmethod
-    def push_data():
+    def push_data() -&gt; None:
         &#34;&#34;&#34;Pushes data to MongoDB/Google Sheet&#34;&#34;&#34;
 
         db_cursor.execute(&#39;SELECT * FROM users&#39;)
@@ -199,8 +188,7 @@ class Database:
         existing_users = [{k: v for k, v in d.items() if k != &#39;_id&#39;} for d in users_collection.find()]
 
         for i in users:
-            user = {
-                &#39;name&#39;: i[0],
+            user = {&#39;name&#39;: i[0],
                 &#39;email&#39;: i[1],
                 &#39;phonenumber&#39;: i[2],
                 &#39;address&#39;: i[3],
@@ -216,18 +204,14 @@ class Database:
             checkin_sheet.insert_row(i, 2)
 
     @staticmethod
-    def shutdown():
+    def shutdown() -&gt; None:
         &#34;&#34;&#34;Delete SQLite file on close&#34;&#34;&#34;
-
-        if platform.system() == &#39;Windows&#39;:
-            subprocess.call([&#39;del&#39;, &#39;/f&#39;, &#39;data.db&#39;], shell=True)
-        else:
-            subprocess.call([&#39;rm&#39;, &#39;data.db&#39;])</code></pre>
+        os.remove(&#39;data.db&#39;)</code></pre>
 </details>
 <h3>Static methods</h3>
 <dl>
 <dt id="gwpc-scanner-checkin.CheckIn.Database.Database.pull_data"><code class="name flex">
-<span>def <span class="ident">pull_data</span></span>(<span>)</span>
+<span>def <span class="ident">pull_data</span></span>(<span>) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Pulls data from MongoDB and stores in SQLite</p></div>
@@ -236,7 +220,7 @@ class Database:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def pull_data():
+def pull_data() -&gt; None:
     &#34;&#34;&#34;Pulls data from MongoDB and stores in SQLite&#34;&#34;&#34;
 
     # Get all users from MongoDB
@@ -255,21 +239,19 @@ def pull_data():
 
     # Write users to local SQLite DB
     for user in users:
-        db_cursor.execute(&#39;&#39;&#39;INSERT INTO users
-                            VALUES (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;,
-                          {
-                              &#39;name&#39;: user[&#39;name&#39;],
-                              &#39;email&#39;: user[&#39;email&#39;],
-                              &#39;phonenumber&#39;: user[&#39;phonenumber&#39;],
-                              &#39;address&#39;: user[&#39;address&#39;],
-                              &#39;studentID&#39;: user[&#39;studentID&#39;]
-                          }
-                          )
+        db_cursor.execute(&#39;&#39;&#39;INSERT INTO users VALUES
+                            (:name, :email, :phonenumber, :address, :studentID)&#39;&#39;&#39;, {
+                                &#39;name&#39;: user[&#39;name&#39;],
+                                &#39;email&#39;: user[&#39;email&#39;],
+                                &#39;phonenumber&#39;: user[&#39;phonenumber&#39;],
+                                &#39;address&#39;: user[&#39;address&#39;],
+                                &#39;studentID&#39;: user[&#39;studentID&#39;]
+        })
     db_connection.commit()</code></pre>
 </details>
 </dd>
 <dt id="gwpc-scanner-checkin.CheckIn.Database.Database.push_data"><code class="name flex">
-<span>def <span class="ident">push_data</span></span>(<span>)</span>
+<span>def <span class="ident">push_data</span></span>(<span>) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Pushes data to MongoDB/Google Sheet</p></div>
@@ -278,7 +260,7 @@ def pull_data():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def push_data():
+def push_data() -&gt; None:
     &#34;&#34;&#34;Pushes data to MongoDB/Google Sheet&#34;&#34;&#34;
 
     db_cursor.execute(&#39;SELECT * FROM users&#39;)
@@ -292,8 +274,7 @@ def push_data():
     existing_users = [{k: v for k, v in d.items() if k != &#39;_id&#39;} for d in users_collection.find()]
 
     for i in users:
-        user = {
-            &#39;name&#39;: i[0],
+        user = {&#39;name&#39;: i[0],
             &#39;email&#39;: i[1],
             &#39;phonenumber&#39;: i[2],
             &#39;address&#39;: i[3],
@@ -310,7 +291,7 @@ def push_data():
 </details>
 </dd>
 <dt id="gwpc-scanner-checkin.CheckIn.Database.Database.shutdown"><code class="name flex">
-<span>def <span class="ident">shutdown</span></span>(<span>)</span>
+<span>def <span class="ident">shutdown</span></span>(<span>) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Delete SQLite file on close</p></div>
@@ -319,13 +300,9 @@ def push_data():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def shutdown():
+def shutdown() -&gt; None:
     &#34;&#34;&#34;Delete SQLite file on close&#34;&#34;&#34;
-
-    if platform.system() == &#39;Windows&#39;:
-        subprocess.call([&#39;del&#39;, &#39;/f&#39;, &#39;data.db&#39;], shell=True)
-    else:
-        subprocess.call([&#39;rm&#39;, &#39;data.db&#39;])</code></pre>
+    os.remove(&#39;data.db&#39;)</code></pre>
 </details>
 </dd>
 </dl>

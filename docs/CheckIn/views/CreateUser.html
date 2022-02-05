@@ -26,12 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from tkinter import *
-from tkinter import ttk as ttk
+<pre><code class="python">import re
+from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk as ttk
+
 from .Base import Base
 from ..User import User
-import re
 
 
 class CreateUser(Base):
@@ -39,6 +40,11 @@ class CreateUser(Base):
 
     def __init__(self, studentID: int):
         super().__init__(geometry=&#39;575x575&#39;, title=&#39;Sign up&#39;)
+
+        self.draw_window(studentID)
+
+    def draw_window(self, studentID: int):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
 
         # Frame for inputs
         signup_frame = Frame(self, background=&#39;#101414&#39;, highlightbackground=&#39;white&#39;, highlightcolor=&#39;white&#39;,
@@ -104,7 +110,7 @@ class CreateUser(Base):
         elif not re.match(&#39;[a-zA-Z0-9]+@hdsb.ca&#39;, school_email):
             messagebox.showerror(&#39;Error&#39;, &#39;Please enter your school email address.&#39;)
         elif not phonenumber.isnumeric() and not re.match(r&#39;^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$&#39;,
-                                                           phonenumber):
+                                                          phonenumber):
             messagebox.showerror(&#39;Error&#39;, &#39;Please enter your phone number.&#39;)
         elif not address:
             messagebox.showerror(&#39;Error&#39;, &#39;Please enter your address.&#39;)
@@ -150,6 +156,11 @@ use, visual, width.</p></div>
     def __init__(self, studentID: int):
         super().__init__(geometry=&#39;575x575&#39;, title=&#39;Sign up&#39;)
 
+        self.draw_window(studentID)
+
+    def draw_window(self, studentID: int):
+        &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
+
         # Frame for inputs
         signup_frame = Frame(self, background=&#39;#101414&#39;, highlightbackground=&#39;white&#39;, highlightcolor=&#39;white&#39;,
                              highlightthickness=1, pady=30)
@@ -214,7 +225,7 @@ use, visual, width.</p></div>
         elif not re.match(&#39;[a-zA-Z0-9]+@hdsb.ca&#39;, school_email):
             messagebox.showerror(&#39;Error&#39;, &#39;Please enter your school email address.&#39;)
         elif not phonenumber.isnumeric() and not re.match(r&#39;^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$&#39;,
-                                                           phonenumber):
+                                                          phonenumber):
             messagebox.showerror(&#39;Error&#39;, &#39;Please enter your phone number.&#39;)
         elif not address:
             messagebox.showerror(&#39;Error&#39;, &#39;Please enter your address.&#39;)
@@ -240,6 +251,70 @@ use, visual, width.</p></div>
 </ul>
 <h3>Methods</h3>
 <dl>
+<dt id="gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser.draw_window"><code class="name flex">
+<span>def <span class="ident">draw_window</span></span>(<span>self, studentID: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draws to screen</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_window(self, studentID: int):
+    &#34;&#34;&#34;Draws to screen&#34;&#34;&#34;
+
+    # Frame for inputs
+    signup_frame = Frame(self, background=&#39;#101414&#39;, highlightbackground=&#39;white&#39;, highlightcolor=&#39;white&#39;,
+                         highlightthickness=1, pady=30)
+
+    # Full name
+    fullname_frame = Frame(signup_frame, background=&#39;#101414&#39;, pady=7)
+    fullname_frame.pack(fill=BOTH)
+    Label(fullname_frame, text=&#39;Full name: &#39;, background=&#39;#101414&#39;, anchor=&#39;w&#39;, foreground=&#39;white&#39;).pack(fill=BOTH)
+    self.fullname_entry = ttk.Entry(signup_frame, background=&#39;#101414&#39;, width=60)
+    self.fullname_entry.pack(ipady=3)
+
+    # School email
+    school_email_frame = Frame(signup_frame, background=&#39;#101414&#39;, pady=7)
+    school_email_frame.pack(fill=BOTH)
+    Label(school_email_frame, text=&#39;School email: &#39;, background=&#39;#101414&#39;, anchor=&#39;w&#39;, foreground=&#39;white&#39;).pack(
+        fill=BOTH)
+    self.school_email_entry = ttk.Entry(signup_frame, background=&#39;#101414&#39;, width=60)
+    self.school_email_entry.pack(ipady=3)
+
+    # Phone number
+    phonenumber_frame = Frame(signup_frame, background=&#39;#101414&#39;, pady=7)
+    phonenumber_frame.pack(fill=BOTH)
+    Label(phonenumber_frame, text=&#39;Phone number: &#39;, background=&#39;#101414&#39;, anchor=&#39;w&#39;, foreground=&#39;white&#39;).pack(
+        fill=BOTH)
+    self.phonenumber_entry = ttk.Entry(signup_frame, background=&#39;#101414&#39;, width=60)
+    self.phonenumber_entry.pack(ipady=3)
+
+    # Address
+    address_frame = Frame(signup_frame, background=&#39;#101414&#39;, pady=7)
+    address_frame.pack(fill=BOTH)
+    Label(address_frame, text=&#39;Address: &#39;, background=&#39;#101414&#39;, anchor=&#39;w&#39;, foreground=&#39;white&#39;).pack(fill=BOTH)
+    self.address_entry = ttk.Entry(signup_frame, background=&#39;#101414&#39;, width=60)
+    self.address_entry.pack(ipady=3)
+
+    # Student ID
+    studentID_frame = Frame(signup_frame, background=&#39;#101414&#39;, pady=7)
+    studentID_frame.pack(fill=BOTH)
+    Label(studentID_frame, text=&#39;Student ID: &#39;, background=&#39;#101414&#39;, anchor=&#39;w&#39;, foreground=&#39;white&#39;).pack(
+        fill=BOTH)
+    self.studentID_entry = ttk.Entry(signup_frame, background=&#39;#101414&#39;, width=60)
+    self.studentID_entry.pack(ipady=3)
+    self.studentID_entry.insert(0, studentID)
+
+    signup_frame.pack()
+
+    # Sign up button
+    signup_button = ttk.Button(self, text=&#39;Sign up&#39;, command=self.sign_up)
+    signup_button.pack()
+
+    self.bind(&#39;&lt;Return&gt;&#39;, self.sign_up)</code></pre>
+</details>
+</dd>
 <dt id="gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser.sign_up"><code class="name flex">
 <span>def <span class="ident">sign_up</span></span>(<span>self, *args)</span>
 </code></dt>
@@ -262,7 +337,7 @@ use, visual, width.</p></div>
     elif not re.match(&#39;[a-zA-Z0-9]+@hdsb.ca&#39;, school_email):
         messagebox.showerror(&#39;Error&#39;, &#39;Please enter your school email address.&#39;)
     elif not phonenumber.isnumeric() and not re.match(r&#39;^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$&#39;,
-                                                       phonenumber):
+                                                      phonenumber):
         messagebox.showerror(&#39;Error&#39;, &#39;Please enter your phone number.&#39;)
     elif not address:
         messagebox.showerror(&#39;Error&#39;, &#39;Please enter your address.&#39;)
@@ -299,6 +374,7 @@ use, visual, width.</p></div>
 <li>
 <h4><code><a title="gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser" href="#gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser">CreateUser</a></code></h4>
 <ul class="">
+<li><code><a title="gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser.draw_window" href="#gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser.draw_window">draw_window</a></code></li>
 <li><code><a title="gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser.sign_up" href="#gwpc-scanner-checkin.CheckIn.views.CreateUser.CreateUser.sign_up">sign_up</a></code></li>
 </ul>
 </li>

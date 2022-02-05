@@ -26,62 +26,12 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from tkinter import *
-from tkinter import messagebox
-import CheckIn
-
-# Make root window invisible
-root = Tk()
-root.geometry(&#39;0x0&#39;)
-
-
-def pull_data():
-    &#34;&#34;&#34;Pull data on app launch&#34;&#34;&#34;
-    if CheckIn.Internet.connected_to_internet():
-        # If connected to the internet
-
-        # Pull data
-        CheckIn.Database.pull_data()
-    else:
-        # If not connected to the internet, ask to retry
-        retry = messagebox.askretrycancel(&#39;Error&#39;,
-                                          &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
-        if retry:
-            pull_data()
-
-
-pull_data()
+<pre><code class="python">import CheckIn
 
 # Run main app GUI
-app = CheckIn.views.App()
-
-
-def on_close():
-    &#34;&#34;&#34;Push data on close&#34;&#34;&#34;
-
-    if CheckIn.Internet.connected_to_internet():
-        # If connected to the internet
-
-        # Push data
-        messagebox.showinfo(&#39;Pushing data&#39;, &#39;Pushing data...&#39;)
-        CheckIn.Database.push_data()
-        messagebox.showinfo(&#39;Updated data&#39;, &#39;Data has been updated.&#39;)
-        # Destroy GUI
-        root.destroy()
-        # Delete local database
-        CheckIn.Database.shutdown()
-    else:
-        # If not connected to the internet, ask to retry
-        retry = messagebox.askretrycancel(&#39;Error&#39;,
-                                          &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
-        if retry:
-            on_close()
-
-
-app.protocol(&#39;WM_DELETE_WINDOW&#39;, on_close)
-root.protocol(&#39;WM_DELETE_WINDOW&#39;, on_close)
-
-root.mainloop()</code></pre>
+if __name__ == &#39;__main__&#39;:
+    app = CheckIn.views.App()
+    app.mainloop()</code></pre>
 </details>
 </section>
 <section>
@@ -89,64 +39,6 @@ root.mainloop()</code></pre>
 <section>
 </section>
 <section>
-<h2 class="section-title" id="header-functions">Functions</h2>
-<dl>
-<dt id="gwpc-scanner-checkin.main.on_close"><code class="name flex">
-<span>def <span class="ident">on_close</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Push data on close</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def on_close():
-    &#34;&#34;&#34;Push data on close&#34;&#34;&#34;
-
-    if CheckIn.Internet.connected_to_internet():
-        # If connected to the internet
-
-        # Push data
-        messagebox.showinfo(&#39;Pushing data&#39;, &#39;Pushing data...&#39;)
-        CheckIn.Database.push_data()
-        messagebox.showinfo(&#39;Updated data&#39;, &#39;Data has been updated.&#39;)
-        # Destroy GUI
-        root.destroy()
-        # Delete local database
-        CheckIn.Database.shutdown()
-    else:
-        # If not connected to the internet, ask to retry
-        retry = messagebox.askretrycancel(&#39;Error&#39;,
-                                          &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
-        if retry:
-            on_close()</code></pre>
-</details>
-</dd>
-<dt id="gwpc-scanner-checkin.main.pull_data"><code class="name flex">
-<span>def <span class="ident">pull_data</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Pull data on app launch</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def pull_data():
-    &#34;&#34;&#34;Pull data on app launch&#34;&#34;&#34;
-    if CheckIn.Internet.connected_to_internet():
-        # If connected to the internet
-
-        # Pull data
-        CheckIn.Database.pull_data()
-    else:
-        # If not connected to the internet, ask to retry
-        retry = messagebox.askretrycancel(&#39;Error&#39;,
-                                          &#39;You are not connected to the internet. Connect to the internet and try again.&#39;)
-        if retry:
-            pull_data()</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 <section>
 </section>
@@ -160,12 +52,6 @@ root.mainloop()</code></pre>
 <li><h3>Super-module</h3>
 <ul>
 <li><code><a title="gwpc-scanner-checkin" href="index.html">gwpc-scanner-checkin</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="gwpc-scanner-checkin.main.on_close" href="#gwpc-scanner-checkin.main.on_close">on_close</a></code></li>
-<li><code><a title="gwpc-scanner-checkin.main.pull_data" href="#gwpc-scanner-checkin.main.pull_data">pull_data</a></code></li>
 </ul>
 </li>
 </ul>
