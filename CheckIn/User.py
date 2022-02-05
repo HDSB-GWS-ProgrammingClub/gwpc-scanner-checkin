@@ -9,7 +9,7 @@ db_cursor = db_connection.cursor()
 class User:
     """Methods to interact with users"""
 
-    def check_user_exists(studentID: int):
+    def check_user_exists(studentID: int) -> bool:
         """
         Check if user exists
 
@@ -25,7 +25,7 @@ class User:
         # Print whether user exists
         return bool(db_cursor.fetchone())
 
-    def create_new_user(name, email, phonenumber, address, studentID):
+    def create_new_user(name, email, phonenumber, address, studentID) -> None:
         """Create a new user"""
 
         data = {
@@ -41,7 +41,7 @@ class User:
                             VALUES (:name, :email, :phonenumber, :address, :studentID)''', data)
         db_connection.commit()
 
-    def checkin_user(studentID: int):
+    def checkin_user(studentID: int) -> bool:
         """
         Check-in user to the database
 

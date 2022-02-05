@@ -14,7 +14,11 @@ class Acknowledgements(Base):
 
     @staticmethod
     def _get_data() -> list:
-        """Get libraries from JSON file"""
+        """
+        Get libraries from JSON file
+
+        Returns: list of libraries
+        """
         with open('acknowledgements.json', 'r') as f:
             return json.load(f)
 

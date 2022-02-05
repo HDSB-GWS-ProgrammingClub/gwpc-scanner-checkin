@@ -5,7 +5,7 @@ class Internet:
     """Methods to interact with the internet"""
 
     @staticmethod
-    def connected_to_internet():
+    def connected_to_internet() -> bool:
         """
         Check if connected to the internet
 

@@ -4,8 +4,6 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import dotenv
 import os
-import subprocess
-import platform
 
 dotenv.load_dotenv()
 
@@ -31,7 +29,7 @@ class Database:
     """Methods to interact with database"""
 
     @staticmethod
-    def pull_data():
+    def pull_data() -> None:
         """Pulls data from MongoDB and stores in SQLite"""
 
         # Get all users from MongoDB
@@ -50,20 +48,18 @@ class Database:
 
         # Write users to local SQLite DB
         for user in users:
-            db_cursor.execute('''INSERT INTO users
-                                VALUES (:name, :email, :phonenumber, :address, :studentID)''',
-                              {
-                                  'name': user['name'],
-                                  'email': user['email'],
-                                  'phonenumber': user['phonenumber'],
-                                  'address': user['address'],
-                                  'studentID': user['studentID']
-                              }
-                              )
+            db_cursor.execute('''INSERT INTO users VALUES
+                                (:name, :email, :phonenumber, :address, :studentID)''', {
+                                    'name': user['name'],
+                                    'email': user['email'],
+                                    'phonenumber': user['phonenumber'],
+                                    'address': user['address'],
+                                    'studentID': user['studentID']
+            })
         db_connection.commit()
 
     @staticmethod
-    def push_data():
+    def push_data() -> None:
         """Pushes data to MongoDB/Google Sheet"""
 
         db_cursor.execute('SELECT * FROM users')
@@ -77,8 +73,7 @@ class Database:
         existing_users = [{k: v for k, v in d.items() if k != '_id'} for d in users_collection.find()]
 
         for i in users:
-            user = {
-                'name': i[0],
+            user = {'name': i[0],
                 'email': i[1],
                 'phonenumber': i[2],
                 'address': i[3],
@@ -94,10 +89,6 @@ class Database:
             checkin_sheet.insert_row(i, 2)
 
     @staticmethod
-    def shutdown():
+    def shutdown() -> None:
         """Delete SQLite file on close"""
-
-        if platform.system() == 'Windows':
-            subprocess.call(['del', '/f', 'data.db'], shell=True)
-        else:
-            subprocess.call(['rm', 'data.db'])
+        os.remove('data.db')

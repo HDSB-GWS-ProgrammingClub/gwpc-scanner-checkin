@@ -20,7 +20,7 @@ class App(Base):
         self._pull_data()
         self.draw_window()
 
-        self.protocol('WM_DELETE_WINDOW', self._on_close())
+        self.protocol('WM_DELETE_WINDOW', self._on_close)
 
     def draw_window(self):
         """Draws to screen"""
