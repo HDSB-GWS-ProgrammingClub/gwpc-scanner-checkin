@@ -3,6 +3,9 @@ from tkinter import *
 
 from PIL import ImageTk, Image
 
+# Hide root
+root = Tk()
+root.withdraw()
 
 class Base(Toplevel, ABC):
     """The base class for the GUI"""
