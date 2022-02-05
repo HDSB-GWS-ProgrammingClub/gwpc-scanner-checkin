@@ -1,5 +1,6 @@
 import CheckIn
 
 # Run main app GUI
-app = CheckIn.views.App()
-app.mainloop()
+if __name__ == '__main__':
+    app = CheckIn.views.App()
+    app.mainloop()
